@@ -6,16 +6,13 @@ interface TopBarProps {
   balance: number;
   totalBet: number;
   lastWin: number;
-  selectedChip: number;
-  onChipSelect: (chipValue: number) => void;
+  // Remove chip-related props since ChipSelector gets them from context
 }
 
 export const TopBar: React.FC<TopBarProps> = ({
   balance,
   totalBet,
-  lastWin,
-  selectedChip,
-  onChipSelect
+  lastWin
 }) => {
   return (
     <div className="top-bar">
@@ -24,10 +21,8 @@ export const TopBar: React.FC<TopBarProps> = ({
         totalBet={totalBet} 
         lastWin={lastWin} 
       />
-      <ChipSelector 
-        selectedChip={selectedChip} 
-        onChipSelect={onChipSelect} 
-      />
+      {/* ChipSelector no longer needs props */}
+      <ChipSelector />
     </div>
   );
 };

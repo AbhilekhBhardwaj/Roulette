@@ -1,62 +1,23 @@
 import React from 'react';
-import { TopBar } from './TopBar';
-import Wheel from '../Wheel';
-import Board from '../Board';
-import { NumberHistory } from './NumberHistory';
-import { GameActions } from './GameActions';
-import { useRouletteLogic } from '../hooks/useRouletteLogic';
+import { RouletteProvider } from '../contexts/RouletteContext';
+import { Header } from './Header';
+import { MainContent } from './MainContent';
+import { Footer } from './Footer';
 
-export const RouletteGame: React.FC = () => {
-  const {
-    // State
-    rouletteData,
-    number,
-    chipsData,
-    history,
-    stage,
-    balance,
-    lastWin,
-    totalBet,
-    
-    // Actions
-    selectChip,
-    placeBet,
-    clearBets,
-    spinWheel
-  } = useRouletteLogic();
-
+const RouletteGameContent: React.FC = () => {
   return (
     <div className="roulette-game">
-      <TopBar
-        balance={balance}
-        totalBet={totalBet}
-        lastWin={lastWin}
-        selectedChip={chipsData.selectedChip}
-        onChipSelect={selectChip}
-      />
-      
-      <div className="game-content">
-        <div className="roulette-wheel-wrapper">
-          <Wheel
-            rouletteData={rouletteData}
-            number={number}
-          />
-        </div>
-        
-        <NumberHistory history={history} />
-        
-        <Board
-          onCellClick={placeBet}
-          chipsData={chipsData}
-          rouletteData={rouletteData}
-        />
-      </div>
-      
-      <GameActions
-        stage={stage}
-        onClearBets={clearBets}
-        onPlaceBet={spinWheel}
-      />
+      <Header />
+      <MainContent />
+      <Footer />
     </div>
+  );
+};
+
+export const RouletteGame: React.FC = () => {
+  return (
+    <RouletteProvider>
+      <RouletteGameContent />
+    </RouletteProvider>
   );
 };

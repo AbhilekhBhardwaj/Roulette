@@ -1,29 +1,23 @@
 import React from 'react';
+import { useRoulette } from '../contexts/RouletteContext';
 
-interface ChipSelectorProps {
-  selectedChip: number;
-  onChipSelect: (chipValue: number) => void;
-  availableChips?: number[];
-}
-
+// Remove the props interface since we'll get data from context
 const DEFAULT_CHIPS = [5, 10, 20, 100];
 
-export const ChipSelector: React.FC<ChipSelectorProps> = ({ 
-  selectedChip, 
-  onChipSelect,
-  availableChips = DEFAULT_CHIPS 
-}) => {
+export const ChipSelector: React.FC = () => {
+  const { chipsData, selectChip } = useRoulette();
+  
   return (
     <div className="quick-select">
       <div className="quick-select-header">
         <span className="quick-select-label">Select Chip Value:</span>
         <span className="help-tooltip" title="Choose the value of chips you want to place on the betting board">ⓘ</span>
       </div>
-      {availableChips.map(chipValue => (
+      {DEFAULT_CHIPS.map(chipValue => (
         <button
           key={chipValue}
-          className={selectedChip === chipValue ? "selected" : ""}
-          onClick={() => onChipSelect(chipValue)}
+          className={chipsData.selectedChip === chipValue ? "selected" : ""}
+          onClick={() => selectChip(chipValue)}
         >
           ${chipValue}
         </button>
