@@ -217,6 +217,14 @@ class RouletteWrapper extends React.Component<any, any> {
       }
     });
   }
+
+  handleWinningNumber(winningNumber: number) {
+    // Update the history by adding the new number to the beginning
+    // This will shift all existing numbers to the right
+    this.setState((prev: any) => ({
+      history: [winningNumber, ...prev.history].slice(0, 10) // Keep only last 10 numbers
+    }));
+  }
   render() {
     return (
       <div>
@@ -245,7 +253,11 @@ class RouletteWrapper extends React.Component<any, any> {
                 })
               }
             </td>
-            <td><Wheel rouletteData={this.state.rouletteData} number={this.state.number} /></td>
+            <td><Wheel 
+              rouletteData={this.state.rouletteData} 
+              number={this.state.number} 
+              onWinningNumber={this.handleWinningNumber.bind(this)}
+            /></td>
             <td>
               <div className={"winnerHistory hideElementsTest"}>
               { 

@@ -41,6 +41,10 @@ class Board extends React.Component<any, any> {
           <Chip
             currentItemChips={placedChip}
             currentItem={placedChip.item}
+            leftMin={-10}
+            leftMax={10}
+            topMin={-30}
+            topMax={0}
           />
           <div className="chip-sum">${placedChip.sum}</div>
         </div>

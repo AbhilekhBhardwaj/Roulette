@@ -8,7 +8,7 @@ interface NumberHistoryProps {
 
 export const NumberHistory: React.FC<NumberHistoryProps> = ({ 
   history, 
-  maxNumbers = 10 
+  maxNumbers = 5 
 }) => {
   const displayHistory = history.slice(0, maxNumbers);
 
@@ -16,39 +16,38 @@ export const NumberHistory: React.FC<NumberHistoryProps> = ({
     return (
       <div className="winner-history">
         <h3>📊 Number History</h3>
-        <p className="history-subtitle">No spins yet</p>
+        <div className="last-winning-container">
+          <p className="history-subtitle">Last winning number:</p>
+          <span className="no-spins">No spins yet</span>
+        </div>
       </div>
     );
   }
-
-  const lastWinningNumber = displayHistory[0];
-  const lastNumberColor = getRouletteColor(lastWinningNumber);
-  const remainingNumbers = displayHistory.slice(1);
 
   return (
     <div className="winner-history">
       <h3>📊 Number History</h3>
       <div className="last-winning-container">
         <p className="history-subtitle">Last winning number:</p>
-        <div className={`last-winning-number ${lastNumberColor}`}>
-          {lastWinningNumber}
+        <div className="horizontal-numbers">
+          {displayHistory.map((number, index) => {
+            const color = getRouletteColor(number);
+            return (
+              <div 
+                key={index} 
+                className={`winning-number-horizontal ${color} ${index === 0 ? 'latest' : ''}`}
+                style={{
+                  fontSize: index === 0 ? '20px' : `${18 - index * 2}px`,
+                  width: index === 0 ? '40px' : `${36 - index * 4}px`,
+                  height: index === 0 ? '40px' : `${36 - index * 4}px`
+                }}
+              >
+                {number}
+              </div>
+            );
+          })}
         </div>
       </div>
-      {remainingNumbers.length > 0 && (
-        <>
-          <p className="history-subtitle previous-numbers">Previous numbers</p>
-          <div className="history-numbers">
-            {remainingNumbers.map((number, index) => {
-              const color = getRouletteColor(number);
-              return (
-                <div key={index} className={color}>
-                  {number}
-                </div>
-              );
-            })}
-          </div>
-        </>
-      )}
     </div>
   );
 };

@@ -202,6 +202,68 @@ body {
   will-change: transform;
 }
 
+/* Winning Number Display */
+.winning-number-display {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 15px;
+  padding: 20px;
+  border: 3px solid #d4af37;
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
+  animation: winningNumberAppear 0.5s ease-out;
+}
+
+.winning-number-label {
+  color: #d4af37;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.winning-number {
+  font-size: 48px;
+  font-weight: bold;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  min-width: 80px;
+  display: inline-block;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.winning-number.red {
+  background: linear-gradient(135deg, #DC143C, #B22222);
+}
+
+.winning-number.black {
+  background: linear-gradient(135deg, #2F2F2F, #000000);
+}
+
+.winning-number.green {
+  background: linear-gradient(135deg, #228B22, #32CD32);
+}
+
+@keyframes winningNumberAppear {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+
+
 
 /* CSS Variables for Responsive Design */
 :root {
@@ -617,6 +679,12 @@ div.chip-5-placed {
 .winnerHistory { 
   vertical-align:top;
   width: 400px;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 8px;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
 }
 .winnersBoard { 
   vertical-align:top;
@@ -639,9 +707,14 @@ div.chip-5-placed {
 
 }
 .winnerHistory div {
-  float:left; 
   color:#fff;
   font-weight: 900;
+  padding: 8px 12px;
+  border-radius: 6px;
+  min-width: 30px;
+  text-align: center;
+  font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 /* Last Winning Number Layout */
@@ -659,6 +732,49 @@ div.chip-5-placed {
   font-weight: 500;
 }
 
+.no-spins {
+  color: #f5f5dc;
+  font-size: 14px;
+  font-style: italic;
+}
+
+/* Horizontal Numbers Container */
+.horizontal-numbers {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.winning-number-horizontal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: bold;
+  color: white;
+  border: 2px solid rgba(255,255,255,0.3);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+
+.winning-number-horizontal.latest {
+  border: 3px solid #ffd700;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.winning-number-horizontal.red {
+  background: linear-gradient(135deg, #DC143C, #B22222);
+}
+
+.winning-number-horizontal.black {
+  background: linear-gradient(135deg, #2F2F2F, #000000);
+}
+
+.winning-number-horizontal.green {
+  background: linear-gradient(135deg, #228B22, #32CD32);
+}
+
+/* Legacy styles - keeping for backward compatibility */
 .last-winning-number {
   display: flex;
   align-items: center;

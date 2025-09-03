@@ -1,18 +1,28 @@
 import anime from "animejs";
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { rouletteData, WheelNumber } from "./Global";
 
 
-const Wheel = ( props : {rouletteData : rouletteData, number: WheelNumber}) : JSX.Element => {
+const Wheel = ( props : {rouletteData : rouletteData, number: WheelNumber, onWinningNumber?: (number: number) => void}) : JSX.Element => {
   var totalNumbers = 37;
   var singleSpinDuration = 5000;
   var singleRotationDegree = 360 / totalNumbers;
   var lastNumber = 0;
+  const [showWinningNumber, setShowWinningNumber] = useState(false);
+  const [currentWinningNumber, setCurrentWinningNumber] = useState<number | null>(null);
 
   var rouletteWheelNumbers = props.rouletteData.numbers;
   console.log(props.rouletteData);
   console.log(props.number);
+  
+  // Get number color (red/black/green)
+  const getNumberColor = (num: number) => {
+    if (num === 0) return 'green';
+    const redNumbers = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36];
+    return redNumbers.includes(num) ? 'red' : 'black';
+  };
+  
   const getRouletteIndexFromNumber = (number: string) => {
     return rouletteWheelNumbers.indexOf(parseInt(number));
   };
@@ -98,6 +108,14 @@ const Wheel = ( props : {rouletteData : rouletteData, number: WheelNumber}) : JS
       easing: `cubicBezier(${bezier.join(",")})`,
       complete: function (anim: any) {
         lastNumber = currentNumber;
+        // Show winning number after wheel stops spinning
+        setCurrentWinningNumber(currentNumber);
+        setShowWinningNumber(true);
+        
+        // Notify parent component about the new winning number
+        if (props.onWinningNumber) {
+          props.onWinningNumber(currentNumber);
+        }
       }
     });
     // aniamte ball
@@ -119,6 +137,9 @@ const Wheel = ( props : {rouletteData : rouletteData, number: WheelNumber}) : JS
     var nextNubmer = props.number.next;
     if (nextNubmer != null && nextNubmer !== "") {
       var nextNumberInt = parseInt(nextNubmer);
+      // Hide previous winning number when new spin starts
+      setShowWinningNumber(false);
+      setCurrentWinningNumber(null);
       spinWheel(nextNumberInt);
     }
   }, [props.number]);
@@ -141,6 +162,17 @@ const Wheel = ( props : {rouletteData : rouletteData, number: WheelNumber}) : JS
           style={{ transform: "translate(0, -163.221px)" }}
         ></div>
       </div>
+      
+      {/* Winning Number Display */}
+      {showWinningNumber && currentWinningNumber !== null && (
+        <div className="winning-number-display">
+          <div className="winning-number-label">WINNING NUMBER</div>
+          <div className={`winning-number ${getNumberColor(currentWinningNumber)}`}>
+            {currentWinningNumber}
+          </div>
+        </div>
+      )}
+      
       {/* <svg width="380" height="380">
         <circle cx="190" cy="190" r="190" style={{touch-action: 'none'}}></circle>
       </svg> */}
