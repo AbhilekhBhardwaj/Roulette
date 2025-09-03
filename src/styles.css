@@ -55,6 +55,35 @@ body {
 }
 .top-bar .quick-select button:hover {
   background: #444;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.top-bar .quick-select button.selected {
+  background: #ffee10;
+  color: #000;
+  border-color: #ffee10;
+  box-shadow: 0 0 10px rgba(255, 238, 16, 0.5);
+  animation: pulse 2s infinite;
+}
+
+.top-bar .quick-select-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 8px;
+}
+
+.top-bar .help-tooltip {
+  color: #ccc;
+  font-size: 12px;
+  cursor: help;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.top-bar .help-tooltip:hover {
+  opacity: 1;
 }
 
 @media (max-width: 768px) {
@@ -174,32 +203,217 @@ body {
 }
 
 
-.roulette-board {
-  float: none;
-  display: flow-root;
-  width: 1000px;
-  height: 420px;
-  background: url(assets/Board.png);
-  background-size: 1000px auto;
-  margin: 0 auto;
+/* CSS Variables for Responsive Design */
+:root {
+  --cell-size: 75px;
+  --cell-gap: 2px;
+  --font-size: 16px;
+  --border-width: 1px;
+  --border-color: #ffffff;
+  --border-radius: 4px;
 }
-.roulette-board-grid-numbers {
-  display: grid;
-  width: auto;
-  height: 216px;
-  margin-left: 37px;
-  margin-right: 23px;
-  margin-top: 27px;
-  margin-bottom: 17px;
+
+/* Tablet */
+@media (max-width: 1024px) {
+  :root {
+    --cell-size: 55px;
+    --font-size: 14px;
+  }
 }
-.roulette-board-grid-other {
+
+/* Mobile */
+@media (max-width: 768px) {
+  :root {
+    --cell-size: 44px; /* Minimum touch target 44px */
+    --font-size: 12px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  :root {
+    --cell-size: 40px;
+    --font-size: 10px;
+  }
+}
+
+/* Roulette Board Wrapper */
+.roulette-board-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #1a4d3a, #2d5a3d);
+  border-radius: 15px;
+  margin: 20px auto;
+  max-width: fit-content;
+}
+
+/* CSS Grid Layout - 14 columns × 5 rows */
+.roulette-board-grid {
   display: grid;
-  width: auto;
-  height: 216px;
-  margin-left: 37px;
-  margin-right: 23px;
-  margin-top: 27px;
-  margin-bottom: 17px;
+  grid-template-columns: var(--cell-size) repeat(12, var(--cell-size)) var(--cell-size);
+  grid-template-rows: repeat(5, var(--cell-size));
+  gap: var(--cell-gap);
+  padding: 20px;
+  background: #0f3d2c;
+  border-radius: 10px;
+  border: 3px solid #d4af37;
+}
+
+/* Base Grid Cell */
+.grid-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: var(--font-size);
+  color: white;
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  user-select: none;
+  min-height: var(--cell-size);
+}
+
+.grid-cell:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+}
+
+
+
+/* Number Cells */
+.number-cell {
+  background: linear-gradient(135deg, #2F2F2F, #000000);
+}
+
+.number-cell.red {
+  background: linear-gradient(135deg, #DC143C, #B22222);
+}
+
+.number-cell.black {
+  background: linear-gradient(135deg, #2F2F2F, #000000);
+}
+
+/* 2:1 Ratio Cells */
+.ratio-cell {
+  background: linear-gradient(135deg, #4169E1, #1E90FF);
+  font-size: calc(var(--font-size) * 0.9);
+}
+
+/* Grid Positioning Specific Classes */
+
+/* Zero Cell - Column 1, Rows 1-3 */
+.zero-cell {
+  grid-column: 1;
+  grid-row: 1 / 4;
+  background: linear-gradient(135deg, #228B22, #32CD32);
+  font-size: calc(var(--font-size) * 1.5);
+}
+
+/* 2:1 Cells - Column 14, Rows 1-3 */
+.ratio-cell-row1 {
+  grid-column: 14;
+  grid-row: 1;
+  background: linear-gradient(135deg, #0f3d2c, #1a4d3a);
+}
+
+.ratio-cell-row2 {
+  grid-column: 14;
+  grid-row: 2;
+  background: linear-gradient(135deg, #0f3d2c, #1a4d3a);
+}
+
+.ratio-cell-row3 {
+  grid-column: 14;
+  grid-row: 3;
+  background: linear-gradient(135deg, #0f3d2c, #1a4d3a);
+}
+
+/* Number Cells - Columns 2-13, Rows 1-3 */
+/* Row 1 Numbers: 3,6,9,12,15,18,21,24,27,30,33,36 */
+/* Row 2 Numbers: 2,5,8,11,14,17,20,23,26,29,32,35 */
+/* Row 3 Numbers: 1,4,7,10,13,16,19,22,25,28,31,34 */
+
+/* Dozens Row - Row 4, Columns 2-13 */
+.dozen-cell-1st {
+  grid-column: 2 / 6;  /* Columns 2-5 (4 columns) */
+  grid-row: 4;
+  background: linear-gradient(135deg, #0f3d2c, #1a4d3a);
+}
+
+.dozen-cell-2nd {
+  grid-column: 6 / 10; /* Columns 6-9 (4 columns) */
+  grid-row: 4;
+  background: linear-gradient(135deg, #0f3d2c, #1a4d3a);
+}
+
+.dozen-cell-3rd {
+  grid-column: 10 / 14; /* Columns 10-13 (4 columns) */
+  grid-row: 4;
+  background: linear-gradient(135deg, #0f3d2c, #1a4d3a);
+}
+
+/* Bottom Bet Cells - Row 5, Columns 2-13 (12 columns / 6 areas = 2 columns each) */
+.bottom-bet-1-18 {
+  grid-column: 2 / 4;   /* Columns 2-3 (2 columns) */
+  grid-row: 5;
+  background: linear-gradient(135deg, #0f3d2c, #1a4d3a);
+}
+
+.bottom-bet-even {
+  grid-column: 4 / 6;   /* Columns 4-5 (2 columns) */
+  grid-row: 5;
+  background: linear-gradient(135deg, #0f3d2c, #1a4d3a);
+}
+
+.bottom-bet-red {
+  grid-column: 6 / 8;   /* Columns 6-7 (2 columns) */
+  grid-row: 5;
+  background: linear-gradient(135deg, #DC143C, #B22222);
+}
+
+.bottom-bet-black {
+  grid-column: 8 / 10;  /* Columns 8-9 (2 columns) */
+  grid-row: 5;
+  background: linear-gradient(135deg, #2F2F2F, #000000);
+}
+
+.bottom-bet-odd {
+  grid-column: 10 / 12; /* Columns 10-11 (2 columns) */
+  grid-row: 5;
+  background: linear-gradient(135deg, #0f3d2c, #1a4d3a);
+}
+
+.bottom-bet-19-36 {
+  grid-column: 12 / 14; /* Columns 12-13 (2 columns) */
+  grid-row: 5;
+  background: linear-gradient(135deg, #0f3d2c, #1a4d3a);
+}
+
+/* Chip Styling */
+.placed-chip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.chip-sum {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ffee10;
+  color: #333;
+  font-size: calc(var(--font-size) * 0.7);
+  font-weight: bold;
+  padding: 2px 4px;
+  border-radius: 50%;
+  min-width: 16px;
+  text-align: center;
 }
 #app table,
 #app td,
@@ -362,8 +576,43 @@ div.chip-5-placed {
   margin-top:20px;
   color: #f5f5dc;
 }
-.rouletteWheelWrapper {
+.roulette-game {
+  padding: 10px;
+}
+
+.game-content {
+  margin: 10px 0;
+}
+
+.roulette-wheel-wrapper {
   margin: 0 auto;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
+
+
+
+/* Table styling */
+#app table,
+#app td,
+#app th {
+  border-collapse: collapse;
+}
+
+.roulette-board-grid-numbers table,
+.roulette-board-grid-other table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.roulette-board-grid-numbers td,
+.roulette-board-grid-other td {
+  padding: 4px;
+  border: 1px solid rgba(255,255,255,0.1);
+  text-align: center;
+  vertical-align: middle;
 }
 .winnerHistory { 
   vertical-align:top;
@@ -393,12 +642,52 @@ div.chip-5-placed {
   float:left; 
   color:#fff;
   font-weight: 900;
-  line-height: 40px;;
-  margin-left:20px;
-  margin-top:10px;
+}
+
+/* Last Winning Number Layout */
+.last-winning-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.last-winning-container .history-subtitle {
+  margin: 0;
+  font-size: 14px;
+  color: #f5f5dc;
+  font-weight: 500;
+}
+
+.last-winning-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 40px;
   height: 40px;
-  margin-bottom: 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 18px;
+  color: white;
+  border: 2px solid rgba(255,255,255,0.3);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.last-winning-number.red {
+  background: linear-gradient(135deg, #DC143C, #B22222);
+}
+
+.last-winning-number.black {
+  background: linear-gradient(135deg, #2F2F2F, #000000);
+}
+
+.last-winning-number.green {
+  background: linear-gradient(135deg, #228B22, #32CD32);
+}
+
+.previous-numbers {
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 
 .hideElementsTest {

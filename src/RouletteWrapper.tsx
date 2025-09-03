@@ -80,29 +80,32 @@ class RouletteWrapper extends React.Component<any, any> {
   }
 
   onCellClick(item: Item) {
-    //console.log("----");
+    console.log("RouletteWrapper onCellClick called with:", item);
     var currentChips: Map<string, PlacedChip> = this.state.chipsData.placedChips;
 
     var chipValue = this.state.chipsData.selectedChip;
     if (chipValue === 0 || chipValue === null || chipValue === undefined) {
+      console.log("No chip selected, chipValue:", chipValue);
       return;
     }
     const currentChip: PlacedChip = { item: item, sum: chipValue };
 
-    console.log(this.state.chipsData.placedChips);
-    console.log(item);
     const key = this.getCellKey(item);
+    console.log("Generated key:", key);
     const existing = currentChips.get(key);
     if (existing !== undefined) {
       currentChip.sum += existing.sum;
     }
 
-    //console.log(currentChips[item]);
-    currentChips.set(key, currentChip);
+    // Create a new Map to ensure React detects the state change
+    const newChips = new Map(currentChips);
+    newChips.set(key, currentChip);
+    
+    console.log("Placing bet:", key, currentChip);
     this.setState({
       chipsData: {
         selectedChip: this.state.chipsData.selectedChip,
-        placedChips: currentChips
+        placedChips: newChips
       }
     });
   }
@@ -197,12 +200,10 @@ class RouletteWrapper extends React.Component<any, any> {
         win += placedChipSum * 3;
       } else if (placedChipType === ValueType.NUMBERS_3_12 && (winningNumber >= 25 && winningNumber <= 36)) {
         win += placedChipSum * 3;
-      } else if (placedChipType === ValueType.EVEN || placedChipType === ValueType.ODD) {
-        if (winningNumber % 2 === 0) {
-          win += placedChipSum * 2;
-        } else {
-          win += placedChipSum * 2;
-        }
+      } else if (placedChipType === ValueType.EVEN && winningNumber !== 0 && winningNumber % 2 === 0) {
+        win += placedChipSum * 2;
+      } else if (placedChipType === ValueType.ODD && winningNumber !== 0 && winningNumber % 2 === 1) {
+        win += placedChipSum * 2;
       }
     }
     return win;
