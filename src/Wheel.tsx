@@ -1,10 +1,10 @@
 import anime from "animejs";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { rouletteData, WheelNumber } from "./Global";
+import { RouletteData, WheelNumber } from "./types";
 
 
-const Wheel = ( props : {rouletteData : rouletteData, number: WheelNumber, onWinningNumber?: (number: number) => void}) : JSX.Element => {
+const Wheel = ( props : {rouletteData : RouletteData, number: WheelNumber, onWinningNumber?: (number: number) => void}) : JSX.Element => {
   var totalNumbers = 37;
   var singleSpinDuration = 5000;
   var singleRotationDegree = 360 / totalNumbers;
