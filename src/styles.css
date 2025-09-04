@@ -342,6 +342,7 @@ body {
   margin: 0px auto 20px auto;
   max-width: fit-content;
   transform: translateY(-80px);
+  width: 950px;
 }
 
 /* CSS Grid Layout - 14 columns × 5 rows */
@@ -894,12 +895,52 @@ div.chip-5-placed {
 /* New Layout - Wheel Section with Left and Right Bars */
 .wheel-section {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   max-width: 950px;
   margin: 30px auto 20px auto;
   transform: translateY(-20px);
-  padding: 0 20px;
+  padding: 0;
+  position: relative;
+}
+
+/* Wheel and buttons container - centered with tight spacing */
+.wheel-and-buttons {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* Action Buttons Between Bars and Wheel */
+.action-button-left,
+.action-button-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-button-left {
+  margin-right: 10px;
+}
+
+.action-button-right {
+  margin-left: 10px;
+}
+
+.action-button-left button,
+.action-button-right button {
+  min-width: 100px;
+  height: 50px;
+  font-weight: bold;
+  border-radius: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.action-button-left button:hover,
+.action-button-right button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
 /* Winner History - Number History Component */
