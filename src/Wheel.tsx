@@ -4,13 +4,15 @@ import { useEffect } from "react";
 import { RouletteData, WheelNumber } from "./types";
 
 
-const Wheel = ( props : {rouletteData : RouletteData, number: WheelNumber, onWinningNumber?: (number: number) => void, onClearBets?: () => void}) : JSX.Element => {
+const Wheel = ( props : {rouletteData : RouletteData, number: WheelNumber, onWinningNumber?: (number: number) => void, onClearBets?: () => void, totalBet?: number, lastWin?: number}) : JSX.Element => {
   var totalNumbers = 37;
   var singleSpinDuration = 5000;
   var singleRotationDegree = 360 / totalNumbers;
   var lastNumber = 0;
   const [showWinningNumber, setShowWinningNumber] = useState(false);
   const [currentWinningNumber, setCurrentWinningNumber] = useState<number | null>(null);
+  const [currentBetAmount, setCurrentBetAmount] = useState<number>(0);
+  const [currentWinAmount, setCurrentWinAmount] = useState<number>(0);
 
   var rouletteWheelNumbers = props.rouletteData.numbers;
   console.log(props.rouletteData);
@@ -140,6 +142,9 @@ const Wheel = ( props : {rouletteData : RouletteData, number: WheelNumber, onWin
       // Hide previous winning number when new spin starts
       setShowWinningNumber(false);
       setCurrentWinningNumber(null);
+      // Store current bet and win amounts for display
+      setCurrentBetAmount(props.totalBet || 0);
+      setCurrentWinAmount(props.lastWin || 0);
       spinWheel(nextNumberInt);
     }
   }, [props.number]);
@@ -182,6 +187,15 @@ const Wheel = ( props : {rouletteData : RouletteData, number: WheelNumber, onWin
           <div className="winning-number-label">WINNING NUMBER</div>
           <div className={`winning-number ${getNumberColor(currentWinningNumber)}`}>
             {currentWinningNumber}
+          </div>
+          {/* Profit Calculation Display */}
+          <div className="profit-display">
+            <div className="profit-multiplier">
+              {currentWinAmount > 0 && currentBetAmount > 0 ? ((currentBetAmount + currentWinAmount) / currentBetAmount).toFixed(2) : "0.00"}x
+            </div>
+            <div className="profit-amount">
+              ${currentWinAmount > 0 ? (currentBetAmount + currentWinAmount).toFixed(0) : "0"}
+            </div>
           </div>
         </div>
       )}

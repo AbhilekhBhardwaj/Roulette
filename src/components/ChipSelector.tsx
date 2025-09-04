@@ -1,8 +1,19 @@
 import React from 'react';
 import { useRoulette } from '../contexts/RouletteContext';
 
-// Remove the props interface since we'll get data from context
-const DEFAULT_CHIPS = [5, 10, 20, 100];
+// Import chip images
+import chipBlack from '../assets/chip_black.png';
+import chipBlue from '../assets/chip_blue.png';
+import chipOrange from '../assets/chip_orange.png';
+import chipPurple from '../assets/chip_purple.png';
+
+// Map chip values to images
+const CHIP_CONFIG = [
+  { value: 5, image: chipBlack, alt: '$5 Chip' },
+  { value: 10, image: chipBlue, alt: '$10 Chip' },
+  { value: 20, image: chipOrange, alt: '$20 Chip' },
+  { value: 100, image: chipPurple, alt: '$100 Chip' }
+];
 
 export const ChipSelector: React.FC = () => {
   const { chipsData, selectChip } = useRoulette();
@@ -13,13 +24,15 @@ export const ChipSelector: React.FC = () => {
         <span className="quick-select-label">Select Chip Value:</span>
         <span className="help-tooltip" title="Choose the value of chips you want to place on the betting board">ⓘ</span>
       </div>
-      {DEFAULT_CHIPS.map(chipValue => (
+      {CHIP_CONFIG.map(chip => (
         <button
-          key={chipValue}
-          className={chipsData.selectedChip === chipValue ? "selected" : ""}
-          onClick={() => selectChip(chipValue)}
+          key={chip.value}
+          className={`chip-selector-btn ${chipsData.selectedChip === chip.value ? "selected" : ""}`}
+          onClick={() => selectChip(chip.value)}
+          title={chip.alt}
         >
-          ${chipValue}
+          <img src={chip.image} alt={chip.alt} className="chip-image" />
+          <span className="chip-value">${chip.value}</span>
         </button>
       ))}
     </div>
