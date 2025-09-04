@@ -46,6 +46,9 @@ export const useWheel = ({
     const placedChipsArray = Array.from(placedChips.values());
     const winnings = calculateWinnings(winningNumber, placedChipsArray);
 
+    // Close any existing popup immediately when new bet is placed
+    setNumber({ next: null });
+
     // Update game state immediately (except winning number display)
     updateBalance(balance - totalBet + winnings);
     updateLastWin(winnings);
