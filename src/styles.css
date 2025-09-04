@@ -457,18 +457,32 @@ body {
 .ratio-cell-left { 
   grid-column: 1; /* Column 1 */
   grid-row: 4; 
-  background: linear-gradient(135deg, #d4af37, #b8941f);
-  color: black;
+  background: linear-gradient(135deg, #4169e1, #1e3a8a);
+  color: white;
   font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.ratio-cell-left:hover {
+  background: linear-gradient(135deg, #5a7ce8, #2d4a9b);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(65, 105, 225, 0.4);
 }
 
 /* Extra 2:1 cell next to 3rd 12 */
 .ratio-cell-extra { 
   grid-column: 14; /* Column 14 */
   grid-row: 4; 
-  background: linear-gradient(135deg, #d4af37, #b8941f);
-  color: black;
+  background: linear-gradient(135deg, #4169e1, #1e3a8a);
+  color: white;
   font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.ratio-cell-extra:hover {
+  background: linear-gradient(135deg, #5a7ce8, #2d4a9b);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(65, 105, 225, 0.4);
 }
 
 /* Bottom Bet Cells - Row 5, Columns 2-13 (12 columns / 6 areas = 2 columns each) */
