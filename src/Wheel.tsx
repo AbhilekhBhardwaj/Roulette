@@ -164,7 +164,7 @@ const Wheel = ( props : {rouletteData : RouletteData, number: WheelNumber, onWin
       <div className={"ball-container"} style={{ transform: "rotate(0deg)" }}>
         <div
           className={"ball"}
-          style={{ transform: "translate(0, -163.221px)" }}
+          style={{ transform: "translate(0, -110px)" }}
         ></div>
       </div>
       
