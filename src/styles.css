@@ -884,6 +884,142 @@ div.chip-5-placed {
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
 }
 
+/* New Layout - Wheel Section with Left and Right Bars */
+.wheel-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin: 10px 0 40px 0;
+  transform: translateY(-30px);
+}
+
+/* Left Bar Styles */
+.left-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 15px;
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  min-width: 120px;
+}
+
+.stat-item-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #f5f5dc;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.stat-value {
+  font-size: 18px;
+  color: #ffd700;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Right Bar Styles */
+.right-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 15px;
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  min-width: 120px;
+}
+
+.chip-selector-header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.chip-selector-label {
+  font-size: 12px;
+  color: #f5f5dc;
+  font-weight: 500;
+}
+
+.chip-selector-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chip-selector-btn-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  gap: 4px;
+}
+
+.chip-selector-btn-vertical:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 215, 0, 0.5);
+  transform: scale(1.05);
+}
+
+.chip-selector-btn-vertical.selected {
+  background: rgba(255, 215, 0, 0.2);
+  border-color: #ffd700;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.chip-image-vertical {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3));
+}
+
+.chip-selector-btn-vertical.selected .chip-image-vertical {
+  transform: scale(1.1);
+}
+
+.chip-value-vertical {
+  font-size: 10px;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  line-height: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .wheel-section {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .left-bar, .right-bar {
+    flex-direction: row;
+    min-width: auto;
+    width: 100%;
+    justify-content: space-around;
+  }
+  
+  .chip-selector-vertical {
+    flex-direction: row;
+  }
+}
+
 /* Legacy styles - keeping for backward compatibility */
 .last-winning-number {
   display: flex;
