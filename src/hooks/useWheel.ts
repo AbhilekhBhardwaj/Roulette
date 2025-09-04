@@ -51,7 +51,6 @@ export const useWheel = ({
     updateLastWin(winnings);
     addToHistory(winningNumber);
     setGameStage(GameStages.NO_MORE_BETS);
-    clearBets();
 
     // Reset to place bet stage after animation
     setTimeout(() => {

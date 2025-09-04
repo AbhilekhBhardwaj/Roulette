@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { getRouletteColor } from '../utils/rouletteUtils';
 
 interface NumberHistoryProps {
@@ -10,7 +10,23 @@ export const NumberHistory: React.FC<NumberHistoryProps> = ({
   history, 
   maxNumbers = 5 
 }) => {
-  const displayHistory = history.slice(0, maxNumbers);
+  const [delayedHistory, setDelayedHistory] = useState<number[]>([]);
+
+  useEffect(() => {
+    if (history.length > delayedHistory.length) {
+      // New number added, delay showing it by 5 seconds
+      const timer = setTimeout(() => {
+        setDelayedHistory(history);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    } else if (history.length === 0) {
+      // Reset case
+      setDelayedHistory([]);
+    }
+  }, [history, delayedHistory.length]);
+
+  const displayHistory = delayedHistory.slice(0, maxNumbers);
 
   if (displayHistory.length === 0) {
     return (

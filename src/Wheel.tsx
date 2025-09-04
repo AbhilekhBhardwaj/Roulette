@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { RouletteData, WheelNumber } from "./types";
 
 
-const Wheel = ( props : {rouletteData : RouletteData, number: WheelNumber, onWinningNumber?: (number: number) => void}) : JSX.Element => {
+const Wheel = ( props : {rouletteData : RouletteData, number: WheelNumber, onWinningNumber?: (number: number) => void, onClearBets?: () => void}) : JSX.Element => {
   var totalNumbers = 37;
   var singleSpinDuration = 5000;
   var singleRotationDegree = 360 / totalNumbers;
@@ -166,6 +166,19 @@ const Wheel = ( props : {rouletteData : RouletteData, number: WheelNumber, onWin
       {/* Winning Number Display */}
       {showWinningNumber && currentWinningNumber !== null && (
         <div className="winning-number-display">
+          <button 
+            className="close-winning-number" 
+            onClick={() => {
+              setShowWinningNumber(false);
+              setCurrentWinningNumber(null);
+              // Clear the bets when cross button is clicked
+              if (props.onClearBets) {
+                props.onClearBets();
+              }
+            }}
+          >
+            ✕
+          </button>
           <div className="winning-number-label">WINNING NUMBER</div>
           <div className={`winning-number ${getNumberColor(currentWinningNumber)}`}>
             {currentWinningNumber}

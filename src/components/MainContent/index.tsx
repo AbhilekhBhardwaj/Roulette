@@ -5,7 +5,7 @@ import Board from '../../Board';
 import { NumberHistory } from '../NumberHistory';
 
 export const MainContent: React.FC = () => {
-  const { rouletteData, number, chipsData, history, placeBet } = useRoulette();
+  const { rouletteData, number, chipsData, history, placeBet, clearBets } = useRoulette();
 
   return (
     <div className="game-content">
@@ -13,6 +13,7 @@ export const MainContent: React.FC = () => {
         <Wheel
           rouletteData={rouletteData}
           number={number}
+          onClearBets={clearBets}
         />
       </div>
       
