@@ -25,6 +25,7 @@ interface RouletteContextType {
   selectChip: (chipValue: number) => void;
   placeBet: (item: Item) => void;
   clearBets: () => void;
+  undoLastBet: () => void;
   spinWheel: () => void;
   setGameStage: (stage: GameStages) => void;
 }

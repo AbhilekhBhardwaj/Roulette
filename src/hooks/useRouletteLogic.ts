@@ -34,6 +34,7 @@ export const useRouletteLogic = () => {
     selectChip: chips.selectChip,
     placeBet: chips.placeBet,
     clearBets: chips.clearBets,
+    undoLastBet: chips.undoLastBet,
     spinWheel: wheel.spinWheel,
     setGameStage: gameState.setGameStage
   };

@@ -453,6 +453,24 @@ body {
   background: linear-gradient(135deg, #0f3d2c, #1a4d3a);
 }
 
+/* Extra 2:1 cell to the left of 1st 12 */
+.ratio-cell-left { 
+  grid-column: 1; /* Column 1 */
+  grid-row: 4; 
+  background: linear-gradient(135deg, #d4af37, #b8941f);
+  color: black;
+  font-weight: bold;
+}
+
+/* Extra 2:1 cell next to 3rd 12 */
+.ratio-cell-extra { 
+  grid-column: 14; /* Column 14 */
+  grid-row: 4; 
+  background: linear-gradient(135deg, #d4af37, #b8941f);
+  color: black;
+  font-weight: bold;
+}
+
 /* Bottom Bet Cells - Row 5, Columns 2-13 (12 columns / 6 areas = 2 columns each) */
 .bottom-bet-1-18 {
   grid-column: 2 / 4;   /* Columns 2-3 (2 columns) */
@@ -489,6 +507,8 @@ body {
   grid-row: 5;
   background: linear-gradient(135deg, #0f3d2c, #1a4d3a);
 }
+
+
 
 /* Chip Styling */
 .placed-chip {
@@ -943,6 +963,7 @@ div.chip-5-placed {
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
+
 /* Winner History - Number History Component */
 .winner-history {
   text-align: center;
@@ -1115,23 +1136,109 @@ div.chip-5-placed {
   line-height: 1;
 }
 
-/* Responsive adjustments */
+/* Mobile Responsive Styles */
 @media (max-width: 768px) {
   .wheel-section {
     flex-direction: column;
-    gap: 20px;
+    align-items: center;
+    gap: 12px;
+    margin: 20px auto;
+    transform: translateY(-10px);
+    padding: 0 10px;
+    max-width: 100%;
   }
   
-  .left-bar, .right-bar {
-    flex-direction: row;
-    min-width: auto;
+  .wheel-and-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    order: 2;
+  }
+  
+  .left-bar {
+    order: 1;
     width: 100%;
+    max-width: 350px;
+    height: 60px;
+    flex-direction: row;
     justify-content: space-around;
+    padding: 8px 15px;
   }
   
-  .chip-selector-vertical {
+  .right-bar {
+    order: 3;
+    width: 100%;
+    max-width: 350px;
+    height: 60px;
     flex-direction: row;
+    justify-content: center;
+    padding: 8px 15px;
   }
+  
+  /* Mobile: Horizontal chip selector */
+  .chip-selector-vertical {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  /* Mobile chip buttons styling */
+  .chip-selector-btn-vertical {
+    min-width: 70px;
+    min-height: 45px;
+    padding: 3px;
+    flex: 1;
+    max-width: 75px;
+  }
+
+  .chip-image-vertical {
+    width: 30px;
+    height: 30px;
+  }
+
+  .chip-value-vertical {
+    font-size: 8px;
+    margin-top: 2px;
+  }
+
+  /* Mobile stat items - horizontal and compact */
+  .stat-item-vertical {
+    flex-direction: column;
+    align-items: center;
+    min-width: 80px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    margin-bottom: 2px;
+  }
+
+  .stat-value {
+    font-size: 14px;
+  }
+  
+  /* Mobile buttons - closer to wheel */
+  .action-button-left {
+    margin-right: 3px;
+  }
+  
+  .action-button-right {
+    margin-left: 3px;
+  }
+  
+  .action-button-left button,
+  .action-button-right button {
+    min-width: 80px;
+    height: 45px;
+    font-size: 14px;
+  }
+  
 }
 
 /* Legacy styles - keeping for backward compatibility */

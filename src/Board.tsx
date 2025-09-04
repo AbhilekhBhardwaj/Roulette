@@ -127,6 +127,9 @@ class Board extends React.Component<any, any> {
           </div>
 
           {/* Dozens Row - Row 4 */}
+          <div className="grid-cell ratio-cell-left" onClick={this.props.onUndoBet}>
+            <span>Undo ↶</span>
+          </div>
           <div className="grid-cell dozen-cell-1st" onClick={() => this.placeBet(ValueType.NUMBERS_1_12)}>
             <span>1st 12</span>
             {this.renderChip(ValueType.NUMBERS_1_12)}
@@ -138,6 +141,9 @@ class Board extends React.Component<any, any> {
           <div className="grid-cell dozen-cell-3rd" onClick={() => this.placeBet(ValueType.NUMBERS_3_12)}>
             <span>3rd 12</span>
             {this.renderChip(ValueType.NUMBERS_3_12)}
+          </div>
+          <div className="grid-cell ratio-cell-extra" onClick={this.props.onClearBets}>
+            <span>Clear ↻</span>
           </div>
 
           {/* Bottom Bet Row - Row 5 */}

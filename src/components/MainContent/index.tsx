@@ -9,7 +9,7 @@ import { Button } from '@mantine/core';
 import { GameStages } from '../../types';
 
 export const MainContent: React.FC = () => {
-  const { rouletteData, number, chipsData, history, placeBet, clearBets, totalBet, lastWin, stage, spinWheel } = useRoulette();
+  const { rouletteData, number, chipsData, history, placeBet, clearBets, undoLastBet, totalBet, lastWin, stage, spinWheel } = useRoulette();
   
   const canPlaceBets = stage === GameStages.PLACE_BET;
 
@@ -19,19 +19,6 @@ export const MainContent: React.FC = () => {
         <LeftBar />
         
         <div className="wheel-and-buttons">
-          {/* Clear Bet Button - Close to Wheel */}
-          <div className="action-button-left">
-            <Button
-              variant="gradient"
-              gradient={{ from: '#ed6ea0', to: '#ec8c69', deg: 35 }}
-              size="lg"
-              onClick={clearBets}
-              disabled={!canPlaceBets}
-            >
-              Clear Bet
-            </Button>
-          </div>
-          
           <div className="roulette-wheel-wrapper">
             <Wheel
               rouletteData={rouletteData}
@@ -63,6 +50,8 @@ export const MainContent: React.FC = () => {
       
       <Board
         onCellClick={placeBet}
+        onClearBets={clearBets}
+        onUndoBet={undoLastBet}
         chipsData={chipsData}
         rouletteData={rouletteData}
       />
