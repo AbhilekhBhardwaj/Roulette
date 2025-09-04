@@ -5,15 +5,14 @@ body {
 }
 body {
   font-family: sans-serif;
-  background-image: url(assets/felt.png),
-    -webkit-radial-gradient(50% 40%, circle farthest-corner, #527c14, #243a0a);
-  background-size: 180px 180px, auto;
+  background-color: #1a1a1a;
   background-attachment: fixed;
   user-select: none;
   touch-action: pan-y;
   -webkit-tap-highlight-color: transparent;
   margin: 0;
   padding: 0;
+  min-height: 100vh;
 }
 
 .top-bar {
@@ -112,12 +111,12 @@ body {
 
 .roulette-wheel {
   float: right;
-  width: 240px;
-  height: 240px;
+  width: 280px;
+  height: 280px;
   border-radius: 100%;
   background: url(assets/roulette_1.jpg);
-  background-size: 240px 240px;
-  shape-outside: circle(120px);
+  background-size: 280px 280px;
+  shape-outside: circle(140px);
   margin: 0 0 1em 1em;
   box-shadow: 2px 10px 30px rgba(0, 0, 0, 0.4);
   position: relative;
@@ -152,7 +151,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-size: 240px 240px;
+  background-size: 280px 280px;
 }
 
 .roulette-wheel .layer-2,
@@ -190,21 +189,21 @@ body {
 
 .roulette-wheel .ball {
   position: absolute;
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  background: #fff radial-gradient(circle at 4px 4px, #fff, #444);
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  background: #fff radial-gradient(circle at 5px 5px, #fff, #444);
   box-shadow: 1px 1px 4px #000;
-  transform: translateY(-108px);
+  transform: translateY(-126px);
   top: 50%;
   left: 50%;
-  margin: -5px;
+  margin: -6px;
   will-change: transform;
 }
 
 /* Winning Number Display */
 .winning-number-display {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -216,6 +215,7 @@ body {
   border: 2px solid #d4af37;
   box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
   animation: winningNumberAppear 0.5s ease-out;
+  min-width: 200px;
 }
 
 /* Close Button for Winning Number Display */
@@ -341,7 +341,7 @@ body {
   padding: 20px;
   margin: 0px auto 20px auto;
   max-width: fit-content;
-  transform: translateY(-80px);
+  transform: translateY(-100px);
   width: 950px;
 }
 
@@ -701,6 +701,9 @@ div.chip-5-placed {
 
 .game-content {
   margin: 10px 0;
+  background-color: #1a1a1a;
+  min-height: 100vh;
+  padding: 20px;
 }
 
 .roulette-wheel-wrapper {
@@ -912,23 +915,35 @@ div.chip-5-placed {
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
 }
 
-/* New Layout - Wheel Section with Left and Right Bars */
+/* New Layout - Wheel Section with Merged Bar */
 .wheel-section {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  max-width: 950px;
+  gap: 30px;
+  max-width: 1200px;
   margin: 30px auto 20px auto;
   transform: translateY(-20px);
   padding: 0;
   position: relative;
 }
 
-/* Wheel and buttons container - centered with tight spacing */
-.wheel-and-buttons {
+/* Wheel and last win container - left aligned */
+.wheel-and-last-win {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: 15px;
+  transform: translateX(160px) translateY(-10px);
+}
+
+/* Merged bar and button container - right aligned */
+.merged-bar-and-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  transform: translateX(-150px) translateY(-10px);
 }
 
 /* Action Buttons Between Bars and Wheel */
@@ -937,6 +952,15 @@ div.chip-5-placed {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Action Button Below Merged Bar */
+.action-button-below-merged {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  transform: translateY(5px);
 }
 
 .action-button-left {
@@ -948,7 +972,8 @@ div.chip-5-placed {
 }
 
 .action-button-left button,
-.action-button-right button {
+.action-button-right button,
+.action-button-below-merged button {
   min-width: 100px;
   height: 50px;
   font-weight: bold;
@@ -957,8 +982,13 @@ div.chip-5-placed {
   transition: all 0.3s ease;
 }
 
+.action-button-below-merged button {
+  padding: 8px 16px;
+}
+
 .action-button-left button:hover,
-.action-button-right button:hover {
+.action-button-right button:hover,
+.action-button-below-merged button:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
@@ -972,7 +1002,7 @@ div.chip-5-placed {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transform: translateY(-80px) translateX(20px);
+  transform: translateY(-70px) translateX(30px);
 }
 
 /* Last Winning Number Only - Below Wheel */
@@ -1148,12 +1178,55 @@ div.chip-5-placed {
     max-width: 100%;
   }
   
-  .wheel-and-buttons {
+  .wheel-and-last-win {
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    order: 2;
+    order: 1;
+    transform: none;
   }
+  
+  .merged-bar-and-button {
+    order: 2;
+    width: 100%;
+    align-items: center;
+    transform: none;
+  }
+  
+  .merged-bar {
+    order: 2;
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    min-height: 120px;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 15px;
+  }
+  
+  .merged-section {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .chip-selector-horizontal {
+    gap: 4px;
+  }
+  
+  .chip-selector-btn-horizontal {
+    min-width: 40px;
+    padding: 6px;
+  }
+  
+  .chip-image-horizontal {
+    width: 25px;
+    height: 25px;
+  }
+  
+  .chip-value-horizontal {
+    font-size: 9px;
+  }
+  
   
   .left-bar {
     order: 1;
@@ -1275,4 +1348,108 @@ div.chip-5-placed {
 
 .hideElementsTest {
  /* visibility: hidden;*/
+}
+
+/* Merged Bar Styles */
+.merged-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 15px;
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  width: 300px;
+  height: auto;
+  min-height: 200px;
+  align-self: flex-start;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.merged-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.merged-label {
+  font-size: 12px;
+  color: #f5f5dc;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.merged-value {
+  font-size: 18px;
+  color: #ffd700;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.balance-value {
+  color: #32cd32;
+}
+
+.bet-value {
+  color: #ff6b6b;
+}
+
+.win-value {
+  color: #ffd700;
+}
+
+.chip-section {
+  margin-top: 10px;
+}
+
+.chip-selector-horizontal {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.chip-selector-btn-horizontal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 45px;
+}
+
+.chip-selector-btn-horizontal:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 215, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+.chip-selector-btn-horizontal.selected {
+  background: rgba(255, 215, 0, 0.2);
+  border-color: #ffd700;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+}
+
+.chip-image-horizontal {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.chip-value-horizontal {
+  font-size: 10px;
+  color: #ffd700;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }

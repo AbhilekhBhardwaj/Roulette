@@ -168,34 +168,6 @@ const Wheel = ( props : {rouletteData : RouletteData, number: WheelNumber, onWin
         ></div>
       </div>
       
-      {/* Winning Number Display */}
-      {showWinningNumber && currentWinningNumber !== null && (
-        <div className="winning-number-display">
-          <button 
-            className="close-winning-number" 
-            onClick={() => {
-              setShowWinningNumber(false);
-              setCurrentWinningNumber(null);
-              // Only close the winning number display, don't clear bets
-            }}
-          >
-            ✕
-          </button>
-          <div className="winning-number-label">WINNING NUMBER</div>
-          <div className={`winning-number ${getNumberColor(currentWinningNumber)}`}>
-            {currentWinningNumber}
-          </div>
-          {/* Profit Calculation Display */}
-          <div className="profit-display">
-            <div className="profit-multiplier">
-              {currentWinAmount > 0 && currentBetAmount > 0 ? ((currentBetAmount + currentWinAmount) / currentBetAmount).toFixed(2) : "0.00"}x
-            </div>
-            <div className="profit-amount">
-              ${currentWinAmount > 0 ? (currentBetAmount + currentWinAmount).toFixed(0) : "0"}
-            </div>
-          </div>
-        </div>
-      )}
       
       {/* <svg width="380" height="380">
         <circle cx="190" cy="190" r="190" style={{touch-action: 'none'}}></circle>

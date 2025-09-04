@@ -3,8 +3,7 @@ import { useRoulette } from '../../contexts/RouletteContext';
 import Wheel from '../../Wheel';
 import Board from '../../Board';
 import { NumberHistory } from '../NumberHistory';
-import { LeftBar } from '../LeftBar';
-import { RightBar } from '../RightBar';
+import { MergedBar } from '../MergedBar';
 import { Button } from '@mantine/core';
 import { GameStages } from '../../types';
 
@@ -12,13 +11,18 @@ export const MainContent: React.FC = () => {
   const { rouletteData, number, chipsData, history, placeBet, clearBets, undoLastBet, totalBet, lastWin, stage, spinWheel } = useRoulette();
   
   const canPlaceBets = stage === GameStages.PLACE_BET;
+  
+  // Get number color (red/black/green)
+  const getNumberColor = (num: number) => {
+    if (num === 0) return 'green';
+    const redNumbers = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36];
+    return redNumbers.includes(num) ? 'red' : 'black';
+  };
 
   return (
     <div className="game-content">
       <div className="wheel-section">
-        <LeftBar />
-        
-        <div className="wheel-and-buttons">
+        <div className="wheel-and-last-win">
           <div className="roulette-wheel-wrapper">
             <Wheel
               rouletteData={rouletteData}
@@ -29,8 +33,15 @@ export const MainContent: React.FC = () => {
             />
           </div>
           
-          {/* Place Bet Button - Close to Wheel */}
-          <div className="action-button-right">
+          {/* Number History - Below Wheel */}
+          <NumberHistory history={history} />
+        </div>
+        
+        <div className="merged-bar-and-button">
+          <MergedBar />
+          
+          {/* Place Bet Button - Below Merged Bar */}
+          <div className="action-button-below-merged">
             <Button
               variant="gradient"
               gradient={{ from: 'orange', to: 'red' }}
@@ -42,11 +53,7 @@ export const MainContent: React.FC = () => {
             </Button>
           </div>
         </div>
-        
-        <RightBar />
       </div>
-      
-      <NumberHistory history={history} />
       
       <Board
         onCellClick={placeBet}
@@ -55,6 +62,33 @@ export const MainContent: React.FC = () => {
         chipsData={chipsData}
         rouletteData={rouletteData}
       />
+      
+      {/* Winning Number Display - Centered between wheel and merged bar */}
+      {number.next && (
+        <div className="winning-number-display">
+          <button 
+            className="close-winning-number" 
+            onClick={() => {
+              // Close the winning number display
+            }}
+          >
+            ✕
+          </button>
+          <div className="winning-number-label">WINNING NUMBER</div>
+          <div className={`winning-number ${getNumberColor(parseInt(number.next))}`}>
+            {number.next}
+          </div>
+          {/* Profit Calculation Display */}
+          <div className="profit-display">
+            <div className="profit-multiplier">
+              {lastWin > 0 && totalBet > 0 ? ((totalBet + lastWin) / totalBet).toFixed(2) : "0.00"}x
+            </div>
+            <div className="profit-amount">
+              ${lastWin > 0 ? (totalBet + lastWin).toFixed(0) : "0"}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
