@@ -82,8 +82,9 @@ let Chip = function (props: { currentItemChips: any; currentItem: any; leftMin: 
           top: "0px",
           left: "0px"
         };
-        style.left = randomNumber(leftMin, leftMax)+"px";
-        style.top = randomNumber(topMin, topMax)+"px";
+        // Stack chips vertically in the center instead of random positioning
+        style.left = "0px"; // Center horizontally
+        style.top = (-i * 3) + "px"; // Stack vertically with 3px offset per chip
         chipsImgs.push(
           <div
             key={key}

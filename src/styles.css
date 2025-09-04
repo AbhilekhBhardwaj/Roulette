@@ -89,7 +89,7 @@ body {
 @media (max-width: 768px) {
   .roulette-board { width: 100%; height: auto; background-size: contain; }
   .roulette-board-grid-numbers, .roulette-board-grid-other { margin: 12px; }
-  .roulette-wheel { width: 240px; height: 240px; background-size: 240px 240px; }
+  .roulette-wheel { width: 220px; height: 220px; background-size: 220px 220px; }
   .top-bar { max-width: calc(100% - 24px); }
   .roulette-actions { height: auto; }
   .roulette-actions ul { position: static; transform: none; top: auto; left: auto; flex-wrap: wrap; justify-content: center; gap: 8px; }
@@ -98,7 +98,7 @@ body {
 }
 
 @media (max-width: 480px) {
-  .roulette-wheel { width: 200px; height: 200px; background-size: 200px 200px; }
+  .roulette-wheel { width: 180px; height: 180px; background-size: 180px 180px; }
   .top-bar { gap: 8px; padding: 8px 12px; }
   .top-bar .stats { gap: 8px; }
   .top-bar .stat-item strong { font-size: 16px; }
@@ -112,12 +112,12 @@ body {
 
 .roulette-wheel {
   float: right;
-  width: 260px;
-  height: 260px;
+  width: 240px;
+  height: 240px;
   border-radius: 100%;
   background: url(assets/roulette_1.jpg);
-  background-size: 260px 260px;
-  shape-outside: circle(130px);
+  background-size: 240px 240px;
+  shape-outside: circle(120px);
   margin: 0 0 1em 1em;
   box-shadow: 2px 10px 30px rgba(0, 0, 0, 0.4);
   position: relative;
@@ -152,7 +152,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-size: 260px 260px;
+  background-size: 240px 240px;
 }
 
 .roulette-wheel .layer-2,
@@ -190,15 +190,15 @@ body {
 
 .roulette-wheel .ball {
   position: absolute;
-  width: 12px;
-  height: 12px;
-  border-radius: 6px;
-  background: #fff radial-gradient(circle at 5px 5px, #fff, #444);
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background: #fff radial-gradient(circle at 4px 4px, #fff, #444);
   box-shadow: 1px 1px 4px #000;
-  transform: translateY(-116px);
+  transform: translateY(-108px);
   top: 50%;
   left: 50%;
-  margin: -7px;
+  margin: -5px;
   will-change: transform;
 }
 
@@ -211,25 +211,25 @@ body {
   text-align: center;
   z-index: 1000;
   background: rgba(0, 0, 0, 0.9);
-  border-radius: 15px;
-  padding: 20px;
-  border: 3px solid #d4af37;
-  box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
+  border-radius: 12px;
+  padding: 15px;
+  border: 2px solid #d4af37;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
   animation: winningNumberAppear 0.5s ease-out;
 }
 
 /* Close Button for Winning Number Display */
 .close-winning-number {
   position: absolute;
-  top: -10px;
-  right: -10px;
-  width: 30px;
-  height: 30px;
+  top: -8px;
+  right: -8px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: #ff4757;
   border: 2px solid #ffffff;
   color: white;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   cursor: pointer;
   display: flex;
@@ -251,23 +251,23 @@ body {
 
 .winning-number-label {
   color: #d4af37;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
 }
 
 .winning-number {
-  font-size: 48px;
+  font-size: 36px;
   font-weight: bold;
   color: white;
-  padding: 20px;
-  border-radius: 10px;
-  min-width: 80px;
+  padding: 15px;
+  border-radius: 8px;
+  min-width: 60px;
   display: inline-block;
   text-align: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5);
 }
 
 .winning-number.red {
@@ -298,7 +298,8 @@ body {
 
 /* CSS Variables for Responsive Design */
 :root {
-  --cell-size: 75px;
+  --cell-size: 65px;
+  --cell-height: 38px;
   --cell-gap: 2px;
   --font-size: 16px;
   --border-width: 1px;
@@ -309,7 +310,8 @@ body {
 /* Tablet */
 @media (max-width: 1024px) {
   :root {
-    --cell-size: 55px;
+    --cell-size: 48px;
+    --cell-height: 30px;
     --font-size: 14px;
   }
 }
@@ -317,7 +319,8 @@ body {
 /* Mobile */
 @media (max-width: 768px) {
   :root {
-    --cell-size: 44px; /* Minimum touch target 44px */
+    --cell-size: 40px; /* Minimum touch target 40px */
+    --cell-height: 26px;
     --font-size: 12px;
   }
 }
@@ -325,7 +328,8 @@ body {
 /* Small Mobile */
 @media (max-width: 480px) {
   :root {
-    --cell-size: 40px;
+    --cell-size: 36px;
+    --cell-height: 24px;
     --font-size: 10px;
   }
 }
@@ -335,17 +339,16 @@ body {
   display: flex;
   justify-content: center;
   padding: 20px;
-  background: linear-gradient(135deg, #1a4d3a, #2d5a3d);
-  border-radius: 15px;
-  margin: 20px auto;
+  margin: 0px auto 20px auto;
   max-width: fit-content;
+  transform: translateY(-80px);
 }
 
 /* CSS Grid Layout - 14 columns × 5 rows */
 .roulette-board-grid {
   display: grid;
   grid-template-columns: var(--cell-size) repeat(12, var(--cell-size)) var(--cell-size);
-  grid-template-rows: repeat(5, var(--cell-size));
+  grid-template-rows: repeat(5, var(--cell-height));
   gap: var(--cell-gap);
   padding: 20px;
   background: #0f3d2c;
@@ -367,7 +370,7 @@ body {
   position: relative;
   transition: all 0.2s ease;
   user-select: none;
-  min-height: var(--cell-size);
+  min-height: var(--cell-height);
 }
 
 .grid-cell:hover {
@@ -493,6 +496,8 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
+  width: 20px;
+  height: 20px;
 }
 
 .chip-sum {
@@ -601,19 +606,19 @@ ul li.board-chip div.chip-5 {
 
 div.chip-100-placed {
   background:url('assets/chip_black.png') no-repeat;
-  background-size: 30px 30px;
+  background-size: 20px 20px;
 }
 div.chip-20-placed {
   background:url('assets/chip_blue.png') no-repeat;
-  background-size: 30px 30px;
+  background-size: 20px 20px;
 }
 div.chip-10-placed {
   background:url('assets/chip_orange.png') no-repeat;
-  background-size: 30px 30px;
+  background-size: 20px 20px;
 }
 div.chip-5-placed {
   background:url('assets/chip_purple.png') no-repeat;
-  background-size: 30px 30px;
+  background-size: 20px 20px;
 }
 .roulette-actions{
   display: block;
@@ -681,6 +686,7 @@ div.chip-5-placed {
   margin: 0 auto;
   text-align: center;
   margin-bottom: 20px;
+  transform: translateY(-20px);
 }
 
 
@@ -753,7 +759,8 @@ div.chip-5-placed {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 15px;
+  height: 40px;
+  justify-content: center;
 }
 
 .last-winning-container .history-subtitle {
@@ -887,23 +894,80 @@ div.chip-5-placed {
 /* New Layout - Wheel Section with Left and Right Bars */
 .wheel-section {
   display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  max-width: 950px;
+  margin: 30px auto 20px auto;
+  transform: translateY(-20px);
+  padding: 0 20px;
+}
+
+/* Winner History - Number History Component */
+.winner-history {
+  text-align: center;
+  margin: 0;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transform: translateY(-80px) translateX(20px);
+}
+
+/* Last Winning Number Only - Below Wheel */
+.last-winning-only {
+  text-align: center;
+  margin: 5px 0 15px 0;
+  transform: translateY(-35px);
+}
+
+.last-winning-only .last-winning-container {
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 30px;
-  margin: 10px 0 40px 0;
-  transform: translateY(-30px);
+  gap: 15px;
+}
+
+.last-winning-only .history-subtitle {
+  font-size: 16px;
+  color: #f5f5dc;
+  font-weight: 600;
+  margin: 0;
+}
+
+.last-winning-only .winning-number-horizontal {
+  width: 45px;
+  height: 45px;
+  font-size: 22px;
+  font-weight: bold;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #ffd700;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+}
+
+.last-winning-only .no-spins {
+  color: #f5f5dc;
+  font-size: 16px;
+  font-style: italic;
+  opacity: 0.8;
 }
 
 /* Left Bar Styles */
 .left-bar {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 20px;
+  gap: 15px;
+  padding: 15px;
   background: rgba(0, 0, 0, 0.7);
   border-radius: 15px;
   border: 2px solid rgba(255, 215, 0, 0.3);
-  min-width: 120px;
+  width: 130px;
+  height: 150px;
+  align-self: flex-start;
+  justify-content: center;
 }
 
 .stat-item-vertical {
@@ -931,14 +995,15 @@ div.chip-5-placed {
 .right-bar {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   padding: 15px;
   background: rgba(0, 0, 0, 0.7);
   border-radius: 15px;
   border: 2px solid rgba(255, 215, 0, 0.3);
-  min-width: 100px;
-  margin-top: 30px;
+  width: 130px;
+  height: 150px;
   align-self: flex-start;
+  justify-content: center;
 }
 
 .chip-selector-header {
@@ -953,9 +1018,13 @@ div.chip-5-placed {
 }
 
 .chip-selector-vertical {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 8px;
+  width: 100px;
+  margin: 0 auto;
+  justify-items: center;
 }
 
 .chip-selector-btn-vertical {
@@ -966,10 +1035,12 @@ div.chip-5-placed {
   background: transparent;
   border: 2px solid transparent;
   border-radius: 8px;
-  padding: 8px;
+  padding: 6px;
   cursor: pointer;
   transition: all 0.3s ease;
-  gap: 4px;
+  gap: 3px;
+  width: 45px;
+  height: 45px;
 }
 
 .chip-selector-btn-vertical:hover {
@@ -985,8 +1056,8 @@ div.chip-5-placed {
 }
 
 .chip-image-vertical {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3));
 }

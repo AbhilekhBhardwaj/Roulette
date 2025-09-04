@@ -31,7 +31,6 @@ export const NumberHistory: React.FC<NumberHistoryProps> = ({
   if (displayHistory.length === 0) {
     return (
       <div className="winner-history">
-        <h3>📊 Number History</h3>
         <div className="last-winning-container">
           <p className="history-subtitle">Last winning number:</p>
           <span className="no-spins">No spins yet</span>
@@ -42,15 +41,14 @@ export const NumberHistory: React.FC<NumberHistoryProps> = ({
 
   return (
     <div className="winner-history">
-      <h3>📊 Number History</h3>
       <div className="last-winning-container">
         <p className="history-subtitle">Last winning number:</p>
         <div className="horizontal-numbers">
           {displayHistory.map((number, index) => {
             const color = getRouletteColor(number);
             return (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className={`winning-number-horizontal ${color} ${index === 0 ? 'latest' : ''}`}
                 style={{
                   fontSize: index === 0 ? '20px' : `${18 - index * 2}px`,

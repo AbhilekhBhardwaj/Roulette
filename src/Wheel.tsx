@@ -176,10 +176,7 @@ const Wheel = ( props : {rouletteData : RouletteData, number: WheelNumber, onWin
             onClick={() => {
               setShowWinningNumber(false);
               setCurrentWinningNumber(null);
-              // Clear the bets when cross button is clicked
-              if (props.onClearBets) {
-                props.onClearBets();
-              }
+              // Only close the winning number display, don't clear bets
             }}
           >
             ✕
