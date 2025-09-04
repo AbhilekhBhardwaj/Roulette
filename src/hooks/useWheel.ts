@@ -24,6 +24,7 @@ export const useWheel = ({
   clearBets
 }: UseWheelProps) => {
   const [number, setNumber] = useState<WheelNumber>({ next: null });
+  const [spinTrigger, setSpinTrigger] = useState<WheelNumber>({ next: null });
   
   const rouletteData = {
     numbers: ROULETTE_WHEEL_NUMBERS
@@ -45,12 +46,19 @@ export const useWheel = ({
     const placedChipsArray = Array.from(placedChips.values());
     const winnings = calculateWinnings(winningNumber, placedChipsArray);
 
-    // Update all game state
-    setNumber({ next: winningNumber.toString() });
+    // Update game state immediately (except winning number display)
     updateBalance(balance - totalBet + winnings);
     updateLastWin(winnings);
     addToHistory(winningNumber);
     setGameStage(GameStages.NO_MORE_BETS);
+
+    // Trigger wheel spin immediately
+    setSpinTrigger({ next: winningNumber.toString() });
+
+    // Show winning number popup after 5 seconds
+    setTimeout(() => {
+      setNumber({ next: winningNumber.toString() });
+    }, 5000);
 
     // Reset to place bet stage after animation
     setTimeout(() => {
@@ -58,9 +66,15 @@ export const useWheel = ({
     }, 3000);
   }, [balance, placedChips, getTotalBet, updateBalance, updateLastWin, addToHistory, setGameStage, clearBets]);
 
+  const clearWinningNumber = useCallback(() => {
+    setNumber({ next: null });
+  }, []);
+
   return {
     number,
+    spinTrigger,
     rouletteData,
-    spinWheel
+    spinWheel,
+    clearWinningNumber
   };
 };

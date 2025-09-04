@@ -11,6 +11,9 @@ interface RouletteContextType {
   number: {
     next: string | null;
   };
+  spinTrigger: {
+    next: string | null;
+  };
   chipsData: {
     selectedChip: number;
     placedChips: Map<string, PlacedChip>;
@@ -28,6 +31,7 @@ interface RouletteContextType {
   undoLastBet: () => void;
   spinWheel: () => void;
   setGameStage: (stage: GameStages) => void;
+  clearWinningNumber: () => void;
 }
 
 // Create the context with null as default

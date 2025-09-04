@@ -20,6 +20,7 @@ export const useRouletteLogic = () => {
     // State
     rouletteData: wheel.rouletteData,
     number: wheel.number,
+    spinTrigger: wheel.spinTrigger,
     chipsData: {
       selectedChip: chips.selectedChip,
       placedChips: chips.placedChips
@@ -36,6 +37,7 @@ export const useRouletteLogic = () => {
     clearBets: chips.clearBets,
     undoLastBet: chips.undoLastBet,
     spinWheel: wheel.spinWheel,
-    setGameStage: gameState.setGameStage
+    setGameStage: gameState.setGameStage,
+    clearWinningNumber: wheel.clearWinningNumber
   };
 };

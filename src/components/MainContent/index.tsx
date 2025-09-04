@@ -8,7 +8,7 @@ import { Button } from '@mantine/core';
 import { GameStages } from '../../types';
 
 export const MainContent: React.FC = () => {
-  const { rouletteData, number, chipsData, history, placeBet, clearBets, undoLastBet, totalBet, lastWin, stage, spinWheel } = useRoulette();
+  const { rouletteData, number, spinTrigger, chipsData, history, placeBet, clearBets, undoLastBet, totalBet, lastWin, stage, spinWheel, clearWinningNumber } = useRoulette();
   
   const canPlaceBets = stage === GameStages.PLACE_BET;
   
@@ -26,7 +26,7 @@ export const MainContent: React.FC = () => {
           <div className="roulette-wheel-wrapper">
             <Wheel
               rouletteData={rouletteData}
-              number={number}
+              number={spinTrigger}
               onClearBets={clearBets}
               totalBet={totalBet}
               lastWin={lastWin}
@@ -68,9 +68,7 @@ export const MainContent: React.FC = () => {
         <div className="winning-number-display">
           <button 
             className="close-winning-number" 
-            onClick={() => {
-              // Close the winning number display
-            }}
+            onClick={clearWinningNumber}
           >
             ✕
           </button>
