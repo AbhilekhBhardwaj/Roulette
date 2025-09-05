@@ -103,6 +103,27 @@ export const calculateWinnings = (winningNumber: number, placedChips: PlacedChip
         }
         break;
 
+      case ValueType.COLUMN_1:
+        // Column 1: 1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34
+        if ([1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34].includes(winningNumber)) {
+          totalWin += sum * 3; // 2:1 payout + original bet
+        }
+        break;
+
+      case ValueType.COLUMN_2:
+        // Column 2: 2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35
+        if ([2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35].includes(winningNumber)) {
+          totalWin += sum * 3; // 2:1 payout + original bet
+        }
+        break;
+
+      case ValueType.COLUMN_3:
+        // Column 3: 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36
+        if ([3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36].includes(winningNumber)) {
+          totalWin += sum * 3; // 2:1 payout + original bet
+        }
+        break;
+
       default:
         break;
     }
@@ -145,6 +166,9 @@ export const getBettingLabel = (type: ValueType, value?: number): string => {
     case ValueType.NUMBERS_1_12: return '1st 12';
     case ValueType.NUMBERS_2_12: return '2nd 12';
     case ValueType.NUMBERS_3_12: return '3rd 12';
+    case ValueType.COLUMN_1: return 'Column 1';
+    case ValueType.COLUMN_2: return 'Column 2';
+    case ValueType.COLUMN_3: return 'Column 3';
     case ValueType.NUMBER: return value?.toString() || '';
     default: return '';
   }

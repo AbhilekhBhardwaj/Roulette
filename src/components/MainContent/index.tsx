@@ -1,16 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRoulette } from '../../contexts/RouletteContext';
 import Wheel from '../../Wheel';
 import Board from '../../Board';
 import { NumberHistory } from '../NumberHistory';
 import { MergedBar } from '../MergedBar';
+import { MobileGameLayout } from '../MobileGameLayout';
 import { Button } from '@mantine/core';
 import { GameStages } from '../../types';
 
 export const MainContent: React.FC = () => {
   const { rouletteData, number, spinTrigger, chipsData, history, placeBet, clearBets, undoLastBet, totalBet, lastWin, stage, spinWheel, clearWinningNumber } = useRoulette();
   
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+  
   const canPlaceBets = stage === GameStages.PLACE_BET;
+  
+  // If mobile, use the mobile layout
+  if (isMobile) {
+    return <MobileGameLayout />;
+  }
   
   // Get number color (red/black/green)
   const getNumberColor = (num: number) => {

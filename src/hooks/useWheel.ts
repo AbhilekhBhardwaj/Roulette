@@ -49,8 +49,8 @@ export const useWheel = ({
     // Close any existing popup immediately when new bet is placed
     setNumber({ next: null });
 
-    // Update game state immediately (except winning number display)
-    updateBalance(balance - totalBet + winnings);
+    // Subtract bet amount from balance immediately
+    updateBalance(balance - totalBet);
     updateLastWin(winnings);
     addToHistory(winningNumber);
     setGameStage(GameStages.NO_MORE_BETS);
@@ -58,9 +58,10 @@ export const useWheel = ({
     // Trigger wheel spin immediately
     setSpinTrigger({ next: winningNumber.toString() });
 
-    // Show winning number popup after 5 seconds
+    // Show winning number popup and add winnings to balance after 5 seconds
     setTimeout(() => {
       setNumber({ next: winningNumber.toString() });
+      updateBalance(balance - totalBet + winnings);
     }, 5000);
 
     // Reset to place bet stage after animation

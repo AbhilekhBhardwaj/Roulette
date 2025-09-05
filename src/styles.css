@@ -13,6 +13,9 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
+  /* Better mobile scrolling */
+  -webkit-overflow-scrolling: touch;
+  overflow-x: hidden;
 }
 
 .top-bar {
@@ -328,9 +331,69 @@ body {
 /* Small Mobile */
 @media (max-width: 480px) {
   :root {
-    --cell-size: 36px;
-    --cell-height: 24px;
-    --font-size: 10px;
+    --cell-size: 42px; /* Larger for better touch targets */
+    --cell-height: 28px;
+    --font-size: 12px;
+  }
+  
+  /* Even smaller wheel for small phones */
+  .roulette-wheel {
+    width: 180px !important;
+    height: 180px !important;
+    background-size: 180px 180px !important;
+  }
+  
+  .roulette-wheel .layer-2,
+  .roulette-wheel .layer-3,
+  .roulette-wheel .layer-4,
+  .roulette-wheel .layer-5,
+  .ball-container {
+    background-size: 180px 180px !important;
+  }
+  
+  /* Ensure board cells are touch-friendly */
+  .roulette-board-grid-numbers td,
+  .roulette-board-grid-other td {
+    min-height: 36px;
+    min-width: 36px;
+    padding: 6px 4px;
+    font-size: 11px;
+  }
+  
+  /* Compact stats for small screens */
+  .top-bar .stat-item strong {
+    font-size: 14px;
+  }
+  
+  .top-bar .stat-item span {
+    font-size: 10px;
+  }
+  
+  /* Smaller chip buttons for small screens */
+  .chip-selector-btn-vertical,
+  .chip-selector-btn-horizontal {
+    min-width: 55px;
+    min-height: 45px;
+  }
+  
+  .chip-image-vertical,
+  .chip-image-horizontal {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .chip-value-vertical,
+  .chip-value-horizontal {
+    font-size: 9px;
+  }
+  
+  /* Action buttons for small screens */
+  .action-button-left button,
+  .action-button-right button,
+  .action-button-below-merged button {
+    min-height: 45px;
+    font-size: 14px;
+    padding: 10px 16px;
   }
 }
 
@@ -377,6 +440,29 @@ body {
 .grid-cell:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+}
+
+/* Better mobile touch interactions */
+@media (max-width: 768px) {
+  .grid-cell {
+    /* Larger touch targets */
+    min-height: 38px;
+    min-width: 38px;
+    font-size: 14px;
+  }
+  
+  .grid-cell:hover {
+    /* Reduce hover effects on mobile */
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .grid-cell:active {
+    /* Add active state for better touch feedback */
+    transform: scale(0.95);
+    background-color: rgba(255, 215, 0, 0.2) !important;
+    transition: transform 0.1s ease;
+  }
 }
 
 
@@ -457,32 +543,18 @@ body {
 .ratio-cell-left { 
   grid-column: 1; /* Column 1 */
   grid-row: 4; 
-  background: linear-gradient(135deg, #4169e1, #1e3a8a);
-  color: white;
+  background: linear-gradient(135deg, #d4af37, #b8941f);
+  color: black;
   font-weight: bold;
-  transition: all 0.2s ease;
-}
-
-.ratio-cell-left:hover {
-  background: linear-gradient(135deg, #5a7ce8, #2d4a9b);
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(65, 105, 225, 0.4);
 }
 
 /* Extra 2:1 cell next to 3rd 12 */
 .ratio-cell-extra { 
   grid-column: 14; /* Column 14 */
   grid-row: 4; 
-  background: linear-gradient(135deg, #4169e1, #1e3a8a);
-  color: white;
+  background: linear-gradient(135deg, #d4af37, #b8941f);
+  color: black;
   font-weight: bold;
-  transition: all 0.2s ease;
-}
-
-.ratio-cell-extra:hover {
-  background: linear-gradient(135deg, #5a7ce8, #2d4a9b);
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(65, 105, 225, 0.4);
 }
 
 /* Bottom Bet Cells - Row 5, Columns 2-13 (12 columns / 6 areas = 2 columns each) */
@@ -659,6 +731,48 @@ div.chip-5-placed {
   display: block;
   position: relative;
   height: 150px;
+}
+
+/* Mobile-specific improvements for roulette actions */
+@media (max-width: 768px) {
+  .roulette-actions {
+    height: auto;
+    position: static;
+    padding: 10px;
+    margin: 10px auto;
+    max-width: 380px;
+  }
+  
+  .roulette-actions ul {
+    position: static;
+    transform: none;
+    top: auto;
+    left: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .roulette-actions ul li.board-chip {
+    margin: 5px;
+    list-style: none;
+  }
+  
+  .roulette-actions ul li.board-chip div {
+    width: 55px;
+    height: 55px;
+    line-height: 57px;
+    font-size: 14px;
+    /* Better touch feedback */
+    transform: scale(1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .roulette-actions ul li.board-chip div:active {
+    transform: scale(0.95);
+  }
 }
 .chipValue {
   position: relative;
@@ -1180,152 +1294,408 @@ div.chip-5-placed {
   line-height: 1;
 }
 
-/* Mobile Responsive Styles */
+/* Mobile Responsive Styles - Optimal Layout */
 @media (max-width: 768px) {
-  .wheel-section {
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    margin: 20px auto;
-    transform: translateY(-10px);
-    padding: 0 10px;
-    max-width: 100%;
+  /* Main container adjustments */
+  body {
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
   }
   
-  .wheel-and-last-win {
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    order: 1;
-    transform: none;
-  }
-  
-  .merged-bar-and-button {
-    order: 2;
+  #app {
+    overflow-x: hidden;
     width: 100%;
-    align-items: center;
-    transform: none;
-  }
-  
-  .merged-bar {
-    order: 2;
-    width: 100%;
-    max-width: 350px;
-    height: auto;
-    min-height: 120px;
-    flex-direction: row;
-    justify-content: space-around;
-    padding: 15px;
-  }
-  
-  .merged-section {
-    flex: 1;
-    min-width: 0;
-  }
-  
-  .chip-selector-horizontal {
-    gap: 4px;
-  }
-  
-  .chip-selector-btn-horizontal {
-    min-width: 40px;
-    padding: 6px;
-  }
-  
-  .chip-image-horizontal {
-    width: 25px;
-    height: 25px;
-  }
-  
-  .chip-value-horizontal {
-    font-size: 9px;
-  }
-  
-  
-  .left-bar {
-    order: 1;
-    width: 100%;
-    max-width: 350px;
-    height: 60px;
-    flex-direction: row;
-    justify-content: space-around;
-    padding: 8px 15px;
-  }
-  
-  .right-bar {
-    order: 3;
-    width: 100%;
-    max-width: 350px;
-    height: 60px;
-    flex-direction: row;
-    justify-content: center;
-    padding: 8px 15px;
-  }
-  
-  /* Mobile: Horizontal chip selector */
-  .chip-selector-vertical {
+    min-height: 100vh;
     display: flex;
-    flex-direction: row;
-    gap: 4px;
-    width: 100%;
-    max-width: 320px;
-    margin: 0 auto;
+    flex-direction: column;
+  }
+  
+  /* Hide original top bar on mobile - we'll integrate it better */
+  .top-bar {
+    display: none;
+  }
+  
+  /* Mobile Game Container - Card Based Layout */
+  .mobile-game-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px;
+    min-height: 100vh;
+    background: #1a1a1a;
+  }
+  
+  /* Mobile Header Card - Stats */
+  .mobile-stats-card {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 15px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    padding: 15px;
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    overflow: hidden;
+    margin-bottom: 5px;
   }
   
-  /* Mobile chip buttons styling */
-  .chip-selector-btn-vertical {
-    min-width: 70px;
-    min-height: 45px;
-    padding: 3px;
+  .mobile-stats-card .stat-item {
+    text-align: center;
     flex: 1;
-    max-width: 75px;
+  }
+  
+  .mobile-stats-card .stat-label {
+    font-size: 11px;
+    color: #f5f5dc;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+  }
+  
+  .mobile-stats-card .stat-value {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffd700;
+  }
+  
+  .balance-value { color: #32cd32; }
+  .bet-value { color: #ff6b6b; }
+  .win-value { color: #ffd700; }
+  
+  /* Mobile Wheel Card */
+  .mobile-wheel-card {
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    margin-bottom: 5px;
+  }
+  
+  /* Roulette wheel - BIGGER size for mobile */
+  .roulette-wheel {
+    width: 220px !important;
+    height: 220px !important;
+    background-size: 220px 220px !important;
+    margin: 0 auto 10px auto;
+    float: none;
+    transform: none;
+  }
+  
+  .roulette-wheel .layer-2,
+  .roulette-wheel .layer-3,
+  .roulette-wheel .layer-4,
+  .roulette-wheel .layer-5,
+  .ball-container {
+    background-size: 220px 220px !important;
+  }
+  
+  /* Last winning number - compact */
+  .mobile-last-winning {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #f5f5dc;
+  }
+  
+  .mobile-last-winning .winning-number-display {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 18px;
+    color: white;
+  }
+  
+  /* Mobile Chip Selector Card */
+  .mobile-chip-card {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 15px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    padding: 15px;
+    margin-bottom: 5px;
+  }
+  
+  .mobile-chip-header {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #f5f5dc;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  /* Chip selector - horizontal layout */
+  .chip-selector-vertical,
+  .chip-selector-horizontal {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  
+  .chip-selector-btn-vertical,
+  .chip-selector-btn-horizontal {
+    min-width: 70px;
+    min-height: 60px;
+    padding: 8px;
+    flex: 1;
+    max-width: 85px;
+    border-radius: 12px;
   }
 
-  .chip-image-vertical {
-    width: 30px;
-    height: 30px;
+  .chip-image-vertical,
+  .chip-image-horizontal {
+    width: 35px;
+    height: 35px;
   }
 
-  .chip-value-vertical {
-    font-size: 8px;
-    margin-top: 2px;
+  .chip-value-vertical,
+  .chip-value-horizontal {
+    font-size: 12px;
+    margin-top: 4px;
+    font-weight: bold;
   }
-
-  /* Mobile stat items - horizontal and compact */
+  
+  /* Mobile Betting Board Card - Fixed Height Solution */
+  .mobile-board-card {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 15px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    padding: 15px;
+    margin-bottom: 15px;
+    height: auto;
+    min-height: 280px;
+    max-height: 450px;
+    overflow: visible;
+    position: relative;
+  }
+  
+  .mobile-board-header {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #f5f5dc;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* Board container states */
+  .mobile-board-container {
+    position: relative;
+    width: 100%;
+    transition: all 0.4s ease;
+  }
+  
+  /* Roulette board - optimized mobile handling */
+  .roulette-board-wrapper {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+    transform: none;
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 215, 0, 0.5) transparent;
+    min-height: 200px;
+    padding-left: 10px;
+    padding-right: 10px;
+    scroll-padding-left: 10px;
+  }
+  
+  .roulette-board-wrapper::-webkit-scrollbar {
+    height: 12px;
+  }
+  
+  .roulette-board-wrapper::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    margin: 0 10px;
+  }
+  
+  .roulette-board-wrapper::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #ffd700, #ffed4e);
+    border-radius: 6px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    min-width: 30px;
+  }
+  
+  .roulette-board {
+    min-width: 680px;
+    width: 680px;
+    transform: scale(0.9);
+    transform-origin: left top;
+    padding-left: 5px;
+    margin-left: 5px;
+  }
+  
+  /* Mobile Action Button */
+  .mobile-action-card {
+    background: rgba(0, 0, 0, 0.95);
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    position: sticky;
+    bottom: 15px;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5);
+  }
+  
+  .mobile-action-btn {
+    flex: 1;
+    min-height: 55px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .mobile-action-btn.clear {
+    background: linear-gradient(135deg, #ff6b6b, #ff5252);
+    color: white;
+  }
+  
+  .mobile-action-btn.place {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+  }
+  
+  .mobile-action-btn:active {
+    transform: scale(0.98);
+  }
+  
+  /* Hide desktop elements on mobile */
+  .wheel-section,
+  .left-bar,
+  .right-bar,
+  .merged-bar,
+  .action-button-left,
+  .action-button-right,
+  .action-button-below-merged,
+  .rouletteWheelWrapper,
+  .winnersBoard,
+  .winnerHistory {
+    display: none;
+  }
+  
+  /* Progress bar - integrate into layout */
+  .progressBar {
+    width: 100%;
+    margin: 5px 0;
+    order: 1;
+  }
+  
+  .linearProgressRounds {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  .progressRoundTitle {
+    font-size: 14px;
+    margin-bottom: 8px;
+    text-align: center;
+    color: #ffd700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  /* Ensure proper spacing and no overflow */
+  .mobile-game-container {
+    padding: 10px;
+    gap: 12px;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  
+  .mobile-game-container > * {
+    flex-shrink: 0;
+  }
+  
+  /* Stats items - compact horizontal */
   .stat-item-vertical {
     flex-direction: column;
     align-items: center;
-    min-width: 80px;
+    min-width: 70px;
+    flex: 1;
   }
 
   .stat-label {
-    font-size: 10px;
-    margin-bottom: 2px;
+    font-size: 11px;
+    margin-bottom: 3px;
   }
 
-  .stat-value {
-    font-size: 14px;
+  .stat-value,
+  .merged-value {
+    font-size: 16px;
   }
   
-  /* Mobile buttons - closer to wheel */
-  .action-button-left {
-    margin-right: 3px;
+  /* Fix ball positioning for 220px mobile wheel */
+  .mobile-wheel-card .roulette-wheel .ball {
+    transform: translateY(-85px) !important;
+    width: 10px !important;
+    height: 10px !important;
+    margin: -5px !important;
   }
   
-  .action-button-right {
-    margin-left: 3px;
+  /* Ensure ball container scales properly */
+  .mobile-wheel-card .ball-container {
+    transform-origin: center center !important;
+    overflow: hidden !important;
   }
   
-  .action-button-left button,
-  .action-button-right button {
-    min-width: 80px;
-    height: 45px;
-    font-size: 14px;
+  /* Fix wheel scaling to maintain ball position */
+  .mobile-wheel-card .roulette-wheel {
+    position: relative !important;
+    overflow: hidden !important;
+  }
+}
+
+/* Extra small screens adjustments */
+@media (max-width: 480px) {
+  /* Smaller wheel for very small screens */
+  .roulette-wheel {
+    width: 200px !important;
+    height: 200px !important;
+    background-size: 200px 200px !important;
   }
   
+  .roulette-wheel .layer-2,
+  .roulette-wheel .layer-3,
+  .roulette-wheel .layer-4,
+  .roulette-wheel .layer-5,
+  .ball-container {
+    background-size: 200px 200px !important;
+  }
+  
+  .mobile-wheel-card .roulette-wheel .ball {
+    transform: translateY(-77px) !important;
+    width: 9px !important;
+    height: 9px !important;
+    margin: -4.5px !important;
+  }
+  
+  .mobile-board-card {
+    min-height: 280px !important;
+  }
+  
+  .mobile-board-card .roulette-board {
+    transform: scale(0.85) !important;
+  }
 }
 
 /* Legacy styles - keeping for backward compatibility */
@@ -1466,4 +1836,1158 @@ div.chip-5-placed {
   color: #ffd700;
   font-weight: bold;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* MOBILE BOARD CUTOFF FIXES */
+@media (max-width: 768px) {
+  
+  /* Fix mobile board container height */
+  .mobile-board-card {
+    min-height: 300px !important;
+    max-height: 450px !important;
+    overflow: visible !important;
+    padding-bottom: 25px !important;
+  }
+  
+  /* Better board wrapper sizing */
+  .mobile-board-card .roulette-board-wrapper {
+    min-height: 250px !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    padding-bottom: 10px !important;
+  }
+  
+  /* Optimize board size for mobile */
+  .mobile-board-card .roulette-board {
+    min-width: 680px !important;
+    transform: scale(0.9) !important;
+    transform-origin: left top !important;
+  }
+  
+  /* Enhanced scrollbar */
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar {
+    height: 12px !important;
+  }
+  
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #ffd700, #ffed4e) !important;
+    border-radius: 6px !important;
+    border: 2px solid rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  /* Fix mobile game container */
+  .mobile-game-container {
+    padding-bottom: 30px !important;
+    min-height: 100vh !important;
+  }
+  
+  /* Sticky action buttons */
+  .mobile-action-card {
+    position: sticky !important;
+    bottom: 15px !important;
+    z-index: 1000 !important;
+    margin-top: 15px !important;
+    background: rgba(0, 0, 0, 0.95) !important;
+    backdrop-filter: blur(10px) !important;
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5) !important;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .mobile-board-card {
+    min-height: 280px !important;
+  }
+  
+  .mobile-board-card .roulette-board {
+    transform: scale(0.85) !important;
+  }
+}
+
+/* MOBILE CHIP SELECTOR FIXES */
+@media (max-width: 768px) {
+  
+  /* Fix mobile chip selector layout */
+  .mobile-chip-card .quick-select {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 10px !important;
+    width: 100% !important;
+    justify-content: space-evenly !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+  }
+  
+  .mobile-chip-card .quick-select-header {
+    display: none !important; /* Hide header on mobile for cleaner look */
+  }
+  
+  /* Override grid layout for mobile */
+  .mobile-chip-card .chip-selector-vertical {
+    display: flex !important;
+    flex-direction: row !important;
+    grid-template-columns: none !important;
+    grid-template-rows: none !important;
+    gap: 8px !important;
+    width: 100% !important;
+    justify-content: space-evenly !important;
+  }
+  
+  /* Fix chip selector buttons */
+  .mobile-chip-card .chip-selector-btn,
+  .mobile-chip-card .chip-selector-btn-vertical,
+  .mobile-chip-card .chip-selector-btn-horizontal {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 70px !important;
+    min-height: 70px !important;
+    max-width: 80px !important;
+    padding: 8px !important;
+    flex: 1 !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 12px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+  }
+  
+  /* Selected state */
+  .mobile-chip-card .chip-selector-btn.selected,
+  .mobile-chip-card .chip-selector-btn-vertical.selected,
+  .mobile-chip-card .chip-selector-btn-horizontal.selected {
+    background: rgba(255, 215, 0, 0.25) !important;
+    border-color: #ffd700 !important;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5) !important;
+    transform: scale(1.05) !important;
+  }
+  
+  /* Hover state */
+  .mobile-chip-card .chip-selector-btn:hover,
+  .mobile-chip-card .chip-selector-btn-vertical:hover,
+  .mobile-chip-card .chip-selector-btn-horizontal:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(255, 215, 0, 0.6) !important;
+    transform: translateY(-2px) !important;
+  }
+  
+  /* Active state for better touch feedback */
+  .mobile-chip-card .chip-selector-btn:active,
+  .mobile-chip-card .chip-selector-btn-vertical:active,
+  .mobile-chip-card .chip-selector-btn-horizontal:active {
+    transform: scale(0.95) !important;
+    background: rgba(255, 215, 0, 0.3) !important;
+  }
+  
+  /* Fix chip images */
+  .mobile-chip-card .chip-image,
+  .mobile-chip-card .chip-image-vertical,
+  .mobile-chip-card .chip-image-horizontal {
+    width: 40px !important;
+    height: 40px !important;
+    object-fit: contain !important;
+    margin-bottom: 4px !important;
+  }
+  
+  /* Fix chip values */
+  .mobile-chip-card .chip-value,
+  .mobile-chip-card .chip-value-vertical,
+  .mobile-chip-card .chip-value-horizontal {
+    font-size: 12px !important;
+    font-weight: bold !important;
+    color: #ffffff !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8) !important;
+    margin-top: 2px !important;
+  }
+  
+  /* Selected chip value styling */
+  .mobile-chip-card .chip-selector-btn.selected .chip-value,
+  .mobile-chip-card .chip-selector-btn-vertical.selected .chip-value-vertical,
+  .mobile-chip-card .chip-selector-btn-horizontal.selected .chip-value-horizontal {
+    color: #ffd700 !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1) !important;
+  }
+}
+
+
+/* Extra small screens adjustments */
+@media (max-width: 480px) {
+  .mobile-chip-card .chip-selector-btn,
+  .mobile-chip-card .chip-selector-btn-vertical,
+  .mobile-chip-card .chip-selector-btn-horizontal {
+    min-width: 65px !important;
+    min-height: 65px !important;
+    padding: 6px !important;
+  }
+  
+  .mobile-chip-card .chip-image,
+  .mobile-chip-card .chip-image-vertical,
+  .mobile-chip-card .chip-image-horizontal {
+    width: 35px !important;
+    height: 35px !important;
+  }
+  
+  .mobile-chip-card .chip-value,
+  .mobile-chip-card .chip-value-vertical,
+  .mobile-chip-card .chip-value-horizontal {
+    font-size: 11px !important;
+  }
+}
+
+/* MOBILE WHEEL AND BOARD FIXES */
+@media (max-width: 768px) {
+  
+  /* Fix ball positioning for mobile wheel scaling */
+  .mobile-wheel-card .roulette-wheel .ball {
+    transform: translateY(-65px) !important; /* Adjusted for 180px wheel */
+    width: 9px !important;
+    height: 9px !important;
+    margin: -4.5px !important;
+  }
+  
+  /* Ensure ball container scales properly */
+  .mobile-wheel-card .ball-container {
+    transform-origin: center center !important;
+  }
+  
+  /* Fix wheel scaling to maintain ball position */
+  .mobile-wheel-card .roulette-wheel {
+    position: relative !important;
+    overflow: visible !important;
+  }
+  
+  /* Fix board scrolling - ensure leftmost content is accessible */
+  .mobile-board-card .roulette-board-wrapper {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    scroll-padding-left: 10px !important;
+    /* Enable horizontal scroll to start */
+    scroll-snap-type: x mandatory !important;
+  }
+  
+  /* Add scroll padding to ensure zero column is visible */
+  .mobile-board-card .roulette-board {
+    padding-left: 5px !important;
+    margin-left: 5px !important;
+  }
+  
+  /* Fix board container to prevent left cutoff */
+  .mobile-board-container {
+    padding-left: 5px !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Enhanced scrollbar with scroll indicators */
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar {
+    height: 12px !important;
+  }
+  
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 6px !important;
+    margin: 0 10px !important;
+  }
+  
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #ffd700, #ffed4e) !important;
+    border-radius: 6px !important;
+    border: 2px solid rgba(255, 255, 255, 0.1) !important;
+    min-width: 30px !important;
+  }
+  
+  
+  /* Ensure zero column is always visible */
+  .mobile-board-card .roulette-board-grid-numbers table {
+    border-spacing: 1px !important;
+    margin-left: 0 !important;
+  }
+  
+  /* Fix zero cell positioning */
+  .mobile-board-card .zero-cell {
+    min-width: 45px !important;
+    position: sticky !important;
+    left: 0 !important;
+    z-index: 5 !important;
+    background: linear-gradient(135deg, #228B22, #32CD32) !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  }
+}
+
+/* Extra fixes for very small screens */
+@media (max-width: 480px) {
+  /* Further adjust ball for smaller wheel */
+  .mobile-board-card .roulette-board-wrapper {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+  }
+  
+  /*
+  .mobile-board-card::before {
+    font-size: 9px !important;
+    padding: 3px 8px !important;
+  }
+  */
+}
+
+/* CORRECTED MOBILE BALL POSITIONING */
+@media (max-width: 768px) {
+  
+  /* Fix ball positioning for 180px mobile wheel */
+  .mobile-wheel-card .roulette-wheel .ball {
+    transform: translateY(-65px) !important; /* Proper position for 180px wheel */
+    width: 9px !important;
+    height: 9px !important;
+    margin: -4.5px !important;
+  }
+  
+  /* Ensure ball stays within wheel bounds during animation */
+  .mobile-wheel-card .ball-container {
+    transform-origin: center center !important;
+    overflow: hidden !important;
+  }
+  
+  /* Additional constraint for ball during spin */
+  .mobile-wheel-card .roulette-wheel {
+    position: relative !important;
+    overflow: hidden !important; /* Keep ball within wheel bounds */
+  }
+}
+
+/* Even smaller adjustment for very small screens */
+@media (max-width: 480px) {
+  .mobile-wheel-card .roulette-wheel .ball {
+    transform: translateY(-60px) !important; /* Slightly closer for smaller screens */
+    width: 8px !important;
+    height: 8px !important;
+    margin: -4px !important;
+  }
+}
+
+/* CORRECTED BALL POSITIONING FOR GREEN NUMBER STRIP */
+@media (max-width: 768px) {
+  /* Fix ball positioning to stop in green number strip */
+  .mobile-wheel-card .roulette-wheel .ball {
+    transform: translateY(-95px) !important; /* Move further out to hit green number strip */
+    width: 10px !important;
+    height: 10px !important;
+    margin: -5px !important;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .mobile-wheel-card .roulette-wheel .ball {
+    transform: translateY(-85px) !important; /* Adjusted for 200px wheel to hit green strip */
+    width: 9px !important;
+    height: 9px !important;
+    margin: -4.5px !important;
+  }
+}
+
+/* FIX MOBILE BOARD SCROLLING ISSUES */
+@media (max-width: 768px) {
+  
+  /* Remove sticky zero column and add proper padding */
+  .mobile-board-card .zero-cell {
+    position: static !important; /* Remove sticky positioning */
+    left: auto !important;
+    z-index: auto !important;
+    min-width: 45px !important;
+    background: linear-gradient(135deg, #228B22, #32CD32) !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  }
+  
+  /* Add proper padding to board wrapper for smooth scrolling */
+  .mobile-board-card .roulette-board-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 20px !important; /* Add padding on both sides */
+    margin: 0 !important;
+    transform: none !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-behavior: smooth !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(255, 215, 0, 0.5) transparent !important;
+    min-height: 200px !important;
+    scroll-padding: 0 20px !important; /* Ensure content padding during scroll */
+  }
+  
+  /* Add padding to the actual board */
+  .mobile-board-card .roulette-board {
+    min-width: 680px !important;
+    width: 680px !important;
+    transform: scale(0.9) !important;
+    transform-origin: left top !important;
+    padding: 0 15px !important; /* Add padding around the board */
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Ensure board tables have proper spacing */
+  .mobile-board-card .roulette-board-grid-numbers table,
+  .mobile-board-card .roulette-board-grid-other table {
+    border-spacing: 1px !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+  
+  /* Add scroll indicators with better styling */
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar {
+    height: 12px !important;
+  }
+  
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 6px !important;
+    margin: 0 20px !important; /* Match the padding */
+  }
+  
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #ffd700, #ffed4e) !important;
+    border-radius: 6px !important;
+    border: 2px solid rgba(255, 255, 255, 0.1) !important;
+    min-width: 40px !important;
+  }
+  
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(90deg, #ffd700, #ffb300) !important;
+  }
+  
+  /* Fix board container to prevent any overflow issues */
+  .mobile-board-container {
+    position: relative !important;
+    width: 100% !important;
+    transition: all 0.4s ease !important;
+    padding: 0 !important; /* Remove any conflicting padding */
+    box-sizing: border-box !important;
+    overflow: visible !important;
+  }
+  
+  /* Add visual scroll hints at the edges */
+  .mobile-board-card::after {
+    content: '';
+    position: absolute;
+    top: 50px;
+    right: 5px;
+    width: 15px;
+    height: 60px;
+    background: linear-gradient(to left, rgba(255, 215, 0, 0.3), transparent);
+    pointer-events: none;
+    z-index: 5;
+    border-radius: 0 8px 8px 0;
+  }
+  
+  .mobile-board-card::before {
+    content: '';
+    position: absolute;
+    top: 50px;
+    left: 5px;
+    width: 15px;
+    height: 60px;
+    background: linear-gradient(to right, rgba(255, 215, 0, 0.3), transparent);
+    pointer-events: none;
+    z-index: 5;
+    border-radius: 8px 0 0 8px;
+  }
+}
+
+/* Additional fix for very small screens */
+@media (max-width: 480px) {
+  .mobile-board-card .roulette-board-wrapper {
+    padding: 0 15px !important;
+    scroll-padding: 0 15px !important;
+  }
+  
+  .mobile-board-card .roulette-board {
+    padding: 0 10px !important;
+  }
+  
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar-track {
+    margin: 0 15px !important;
+  }
+}
+
+/* FIX MOBILE BOARD PADDING AND LAYOUT */
+@media (max-width: 768px) {
+  
+  /* Hide those weird "Undo" buttons on the sides */
+  .mobile-board-card .board-toggle-btn,
+  .mobile-board-card [class*="undo"],
+  .mobile-board-card button[class*="undo"] {
+    display: none !important;
+  }
+  
+  /* Clean up the board wrapper padding */
+  .mobile-board-card .roulette-board-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 15px 0 10px !important; /* Less left padding, normal right padding */
+    margin: 0 !important;
+    transform: none !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-behavior: smooth !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(255, 215, 0, 0.5) transparent !important;
+    min-height: 200px !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Adjust the board itself */
+  .mobile-board-card .roulette-board {
+    min-width: 680px !important;
+    width: 680px !important;
+    transform: scale(0.92) !important; /* Slightly smaller scale */
+    transform-origin: left top !important;
+    padding: 0 5px 0 0 !important; /* Minimal padding */
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Fix the board tables */
+  .mobile-board-card .roulette-board-grid-numbers,
+  .mobile-board-card .roulette-board-grid-other {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .mobile-board-card .roulette-board-grid-numbers table,
+  .mobile-board-card .roulette-board-grid-other table {
+    border-spacing: 1px !important;
+    margin: 0 !important;
+    width: 100% !important;
+    table-layout: fixed !important;
+  }
+  
+  /* Remove the gradient indicators that might be causing issues */
+  .mobile-board-card::after,
+  .mobile-board-card::before {
+    display: none !important;
+  }
+  
+  /* Better scrollbar positioning */
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar {
+    height: 10px !important;
+  }
+  
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 5px !important;
+    margin: 0 10px !important;
+  }
+  
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #ffd700, #ffed4e) !important;
+    border-radius: 5px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    min-width: 30px !important;
+  }
+  
+  /* Fix board container */
+  .mobile-board-container {
+    position: relative !important;
+    width: 100% !important;
+    transition: all 0.4s ease !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+  }
+  
+  /* Clean up any extra elements */
+  .mobile-board-card .mobile-board-header {
+    text-align: center !important;
+    margin-bottom: 15px !important;
+    font-size: 14px !important;
+    color: #f5f5dc !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    display: block !important; /* Simple block, no flex */
+    padding: 0 !important;
+  }
+  
+  /* Ensure zero column behaves normally */
+  .mobile-board-card .zero-cell {
+    position: static !important;
+    left: auto !important;
+    z-index: auto !important;
+    min-width: 45px !important;
+    background: linear-gradient(135deg, #228B22, #32CD32) !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  }
+}
+
+/* Extra small screens - even cleaner */
+@media (max-width: 480px) {
+  .mobile-board-card .roulette-board-wrapper {
+    padding: 0 10px 0 5px !important;
+  }
+  
+  .mobile-board-card .roulette-board {
+    transform: scale(0.88) !important;
+  }
+  
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar-track {
+    margin: 0 5px !important;
+  }
+}
+
+/* FIX LEFTMOST SCROLL TO SHOW ZERO COLUMN */
+@media (max-width: 768px) {
+  
+  /* Ensure zero column is visible at leftmost scroll position */
+  .mobile-board-card .roulette-board-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 15px 0 5px !important; /* Minimal left padding to show zero */
+    margin: 0 !important;
+    transform: none !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-behavior: smooth !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(255, 215, 0, 0.5) transparent !important;
+    min-height: 200px !important;
+    box-sizing: border-box !important;
+    scroll-padding-left: 0 !important; /* Start scroll from very beginning */
+  }
+  
+  /* Adjust board positioning to ensure zero shows */
+  .mobile-board-card .roulette-board {
+    min-width: 700px !important; /* Slightly wider to ensure full visibility */
+    width: 700px !important;
+    transform: scale(0.9) !important; /* Scale down to fit better */
+    transform-origin: left top !important;
+    padding: 0 !important; /* Remove all padding */
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+    left: 0 !important; /* Ensure it starts from left edge */
+  }
+  
+  /* Fix the board grid positioning */
+  .mobile-board-card .roulette-board-grid-numbers,
+  .mobile-board-card .roulette-board-grid-other {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+  
+  .mobile-board-card .roulette-board-grid-numbers table,
+  .mobile-board-card .roulette-board-grid-other table {
+    border-spacing: 1px !important;
+    margin: 0 !important;
+    width: 100% !important;
+    table-layout: auto !important;
+    border-collapse: separate !important;
+  }
+  
+  /* Ensure zero column is properly sized and positioned */
+  .mobile-board-card .zero-cell {
+    position: static !important;
+    left: auto !important;
+    z-index: auto !important;
+    min-width: 50px !important; /* Slightly wider for better visibility */
+    width: 50px !important;
+    background: linear-gradient(135deg, #228B22, #32CD32) !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Fix board container to ensure proper alignment */
+  .mobile-board-container {
+    position: relative !important;
+    width: 100% !important;
+    transition: all 0.4s ease !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+    left: 0 !important; /* Ensure container starts from left */
+  }
+  
+  /* Update scrollbar to match new layout */
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 5px !important;
+    margin: 0 5px !important; /* Match the padding */
+  }
+}
+
+/* Extra small screens adjustment */
+@media (max-width: 480px) {
+  .mobile-board-card .roulette-board-wrapper {
+    padding: 0 10px 0 3px !important;
+  }
+  
+  .mobile-board-card .roulette-board {
+    min-width: 680px !important;
+    width: 680px !important;
+    transform: scale(0.85) !important;
+  }
+  
+  .mobile-board-card .zero-cell {
+    min-width: 45px !important;
+    width: 45px !important;
+  }
+}
+
+/* FORCE ZERO COLUMN TO BE VISIBLE AT LEFTMOST SCROLL */
+@media (max-width: 768px) {
+  
+  /* Reset board wrapper to show complete board from start */
+  .mobile-board-card .roulette-board-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important; /* Remove all padding */
+    margin: 0 !important;
+    transform: none !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-behavior: smooth !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(255, 215, 0, 0.5) transparent !important;
+    min-height: 200px !important;
+    box-sizing: border-box !important;
+    border: none !important;
+    /* Force scroll to start from absolute beginning */
+    scroll-padding: 0 !important;
+    scroll-margin: 0 !important;
+  }
+  
+  /* Add margin to the entire board card to create space */
+  .mobile-board-card {
+    background: rgba(0, 0, 0, 0.8) !important;
+    border-radius: 15px !important;
+    border: 2px solid rgba(255, 215, 0, 0.3) !important;
+    padding: 15px 10px 15px 15px !important; /* More left padding on card itself */
+    margin-bottom: 15px !important;
+    height: auto !important;
+    min-height: 280px !important;
+    max-height: 450px !important;
+    overflow: visible !important;
+    position: relative !important;
+  }
+  
+  /* Adjust board to ensure zero column shows */
+  .mobile-board-card .roulette-board {
+    min-width: 720px !important; /* Make it wider */
+    width: 720px !important;
+    transform: scale(0.88) !important; /* Scale down more to fit */
+    transform-origin: left top !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+    left: 0 !important;
+  }
+  
+  /* Ensure board container doesn't add extra space */
+  .mobile-board-container {
+    position: relative !important;
+    width: 100% !important;
+    transition: all 0.4s ease !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+    left: 0 !important;
+  }
+  
+  /* Make sure zero column is wide enough and visible */
+  .mobile-board-card .zero-cell {
+    position: static !important;
+    left: auto !important;
+    z-index: auto !important;
+    min-width: 55px !important;
+    width: 55px !important;
+    background: linear-gradient(135deg, #228B22, #32CD32) !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    box-sizing: border-box !important;
+    display: table-cell !important; /* Ensure it renders as table cell */
+  }
+  
+  /* Fix the table layout to prevent cutting */
+  .mobile-board-card .roulette-board-grid-numbers table,
+  .mobile-board-card .roulette-board-grid-other table {
+    border-spacing: 1px !important;
+    margin: 0 !important;
+    width: 100% !important;
+    table-layout: auto !important;
+    border-collapse: separate !important;
+    min-width: 100% !important;
+  }
+  
+  /* Update scrollbar positioning */
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 5px !important;
+    margin: 0 !important; /* No margin to allow full scroll */
+  }
+  
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #ffd700, #ffed4e) !important;
+    border-radius: 5px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    min-width: 30px !important;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .mobile-board-card {
+    padding: 15px 8px 15px 12px !important;
+  }
+  
+  .mobile-board-card .roulette-board {
+    min-width: 700px !important;
+    width: 700px !important;
+    transform: scale(0.82) !important;
+  }
+  
+  .mobile-board-card .zero-cell {
+    min-width: 50px !important;
+    width: 50px !important;
+  }
+}
+
+/* ADD PROPER LEFT SCROLL PADDING TO SHOW COMPLETE BOARD */
+@media (max-width: 768px) {
+  
+  /* Add scroll padding to show space left of the board */
+  .mobile-board-card .roulette-board-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 20px 0 25px !important; /* Add left padding for scroll space */
+    margin: 0 !important;
+    transform: none !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-behavior: smooth !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(255, 215, 0, 0.5) transparent !important;
+    min-height: 200px !important;
+    box-sizing: border-box !important;
+    /* This ensures there's space to scroll left of the board */
+    scroll-padding-left: 25px !important;
+    scroll-padding-right: 20px !important;
+  }
+  
+  /* Adjust board card padding to compensate */
+  .mobile-board-card {
+    background: rgba(0, 0, 0, 0.8) !important;
+    border-radius: 15px !important;
+    border: 2px solid rgba(255, 215, 0, 0.3) !important;
+    padding: 15px 5px 15px 5px !important; /* Reduce card padding since wrapper has it */
+    margin-bottom: 15px !important;
+    height: auto !important;
+    min-height: 280px !important;
+    max-height: 450px !important;
+    overflow: visible !important;
+    position: relative !important;
+  }
+  
+  /* Ensure board starts with proper spacing */
+  .mobile-board-card .roulette-board {
+    min-width: 720px !important;
+    width: 720px !important;
+    transform: scale(0.85) !important; /* Scale down a bit more to account for padding */
+    transform-origin: left top !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+    left: 0 !important;
+  }
+  
+  /* Make zero column more prominent */
+  .mobile-board-card .zero-cell {
+    position: static !important;
+    left: auto !important;
+    z-index: auto !important;
+    min-width: 60px !important; /* Even wider for better visibility */
+    width: 60px !important;
+    background: linear-gradient(135deg, #228B22, #32CD32) !important;
+    border: 3px solid rgba(255, 255, 255, 0.4) !important; /* Thicker border */
+    box-sizing: border-box !important;
+    display: table-cell !important;
+    font-weight: bold !important;
+    font-size: 18px !important;
+  }
+  
+  /* Update scrollbar to account for padding */
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 5px !important;
+    margin: 0 20px 0 25px !important; /* Match the padding */
+  }
+  
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #ffd700, #ffed4e) !important;
+    border-radius: 5px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    min-width: 40px !important;
+  }
+  
+  /* Ensure smooth scrolling behavior */
+  .mobile-board-container {
+    position: relative !important;
+    width: 100% !important;
+    transition: all 0.4s ease !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .mobile-board-card .roulette-board-wrapper {
+    padding: 0 15px 0 20px !important;
+    scroll-padding-left: 20px !important;
+    scroll-padding-right: 15px !important;
+  }
+  
+  .mobile-board-card .roulette-board {
+    transform: scale(0.8) !important;
+  }
+  
+  .mobile-board-card .zero-cell {
+    min-width: 55px !important;
+    width: 55px !important;
+    font-size: 16px !important;
+  }
+  
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar-track {
+    margin: 0 15px 0 20px !important;
+  }
+}
+
+/* MAKE LEFT SCROLL POSITION MATCH RIGHT SIDE SPACING */
+@media (max-width: 768px) {
+  
+  /* Fix board wrapper to have equal padding on both sides */
+  .mobile-board-card .roulette-board-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 25px 0 25px !important; /* Equal padding on both sides */
+    margin: 0 !important;
+    transform: none !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-behavior: smooth !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(255, 215, 0, 0.5) transparent !important;
+    min-height: 200px !important;
+    box-sizing: border-box !important;
+    /* Equal scroll padding on both sides */
+    scroll-padding-left: 25px !important;
+    scroll-padding-right: 25px !important;
+  }
+  
+  /* Scale board down more to account for equal padding */
+  .mobile-board-card .roulette-board {
+    min-width: 720px !important;
+    width: 720px !important;
+    transform: scale(0.82) !important; /* Scale down more for equal padding */
+    transform-origin: left top !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+    left: 0 !important;
+  }
+  
+  /* Make zero column prominent and well-spaced like the right side */
+  .mobile-board-card .zero-cell {
+    position: static !important;
+    left: auto !important;
+    z-index: auto !important;
+    min-width: 65px !important; /* Wider for better spacing */
+    width: 65px !important;
+    background: linear-gradient(135deg, #228B22, #32CD32) !important;
+    border: 3px solid rgba(255, 255, 255, 0.4) !important;
+    box-sizing: border-box !important;
+    display: table-cell !important;
+    font-weight: bold !important;
+    font-size: 20px !important; /* Larger font to match prominence */
+    text-align: center !important;
+    vertical-align: middle !important;
+  }
+  
+  /* Update scrollbar to match equal padding */
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 5px !important;
+    margin: 0 25px 0 25px !important; /* Equal margins to match padding */
+  }
+  
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #ffd700, #ffed4e) !important;
+    border-radius: 5px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    min-width: 40px !important;
+  }
+  
+  /* Ensure card padding doesn't interfere */
+  .mobile-board-card {
+    background: rgba(0, 0, 0, 0.8) !important;
+    border-radius: 15px !important;
+    border: 2px solid rgba(255, 215, 0, 0.3) !important;
+    padding: 15px 5px 15px 5px !important; /* Minimal card padding */
+    margin-bottom: 15px !important;
+    height: auto !important;
+    min-height: 280px !important;
+    max-height: 450px !important;
+    overflow: visible !important;
+    position: relative !important;
+  }
+}
+
+/* Extra small screens with equal spacing */
+@media (max-width: 480px) {
+  .mobile-board-card .roulette-board-wrapper {
+    padding: 0 20px 0 20px !important; /* Equal padding for small screens */
+    scroll-padding-left: 20px !important;
+    scroll-padding-right: 20px !important;
+  }
+  
+  .mobile-board-card .roulette-board {
+    transform: scale(0.78) !important;
+  }
+  
+  .mobile-board-card .zero-cell {
+    min-width: 60px !important;
+    width: 60px !important;
+    font-size: 18px !important;
+  }
+  
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar-track {
+    margin: 0 20px 0 20px !important;
+  }
+}
+
+/* FORCE SCROLLBAR TO SHOW LEFTMOST PADDING SPACE */
+@media (max-width: 768px) {
+  
+  /* Create invisible extension to force scroll beyond board */
+  .mobile-board-card .roulette-board-wrapper::before {
+    content: '' !important;
+    display: block !important;
+    width: 30px !important; /* Invisible space to scroll to */
+    height: 1px !important;
+    float: left !important;
+    clear: both !important;
+  }
+  
+  /* Fix board wrapper to allow full scroll range */
+  .mobile-board-card .roulette-board-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important; /* Remove padding from wrapper */
+    margin: 0 !important;
+    transform: none !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-behavior: smooth !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(255, 215, 0, 0.5) transparent !important;
+    min-height: 200px !important;
+    box-sizing: border-box !important;
+    /* Allow scrolling to the invisible space */
+    scroll-padding: 0 !important;
+  }
+  
+  /* Add padding directly to the board container */
+  .mobile-board-container {
+    position: relative !important;
+    width: 100% !important;
+    transition: all 0.4s ease !important;
+    padding: 0 25px 0 25px !important; /* Move padding here */
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+    min-width: calc(100% + 50px) !important; /* Extend beyond wrapper */
+  }
+  
+  /* Scale board to fit with the padding */
+  .mobile-board-card .roulette-board {
+    min-width: 720px !important;
+    width: 720px !important;
+    transform: scale(0.82) !important;
+    transform-origin: left top !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+    left: 0 !important;
+  }
+  
+  /* Make zero column prominent */
+  .mobile-board-card .zero-cell {
+    position: static !important;
+    left: auto !important;
+    z-index: auto !important;
+    min-width: 65px !important;
+    width: 65px !important;
+    background: linear-gradient(135deg, #228B22, #32CD32) !important;
+    border: 3px solid rgba(255, 255, 255, 0.4) !important;
+    box-sizing: border-box !important;
+    display: table-cell !important;
+    font-weight: bold !important;
+    font-size: 20px !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+  }
+  
+  /* Alternative approach: Add invisible spacer element */
+  .mobile-board-card .roulette-board-wrapper::after {
+    content: '' !important;
+    display: block !important;
+    width: 30px !important;
+    height: 1px !important;
+    float: right !important;
+    clear: both !important;
+  }
+  
+  /* Ensure scrollbar extends full range */
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 5px !important;
+    margin: 0 !important; /* No margin restrictions */
+  }
+  
+  .mobile-board-card .roulette-board-wrapper::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #ffd700, #ffed4e) !important;
+    border-radius: 5px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    min-width: 40px !important;
+  }
+}
+
+/* Small screens */
+@media (max-width: 480px) {
+  .mobile-board-container {
+    padding: 0 20px 0 20px !important;
+    min-width: calc(100% + 40px) !important;
+  }
+  
+  .mobile-board-card .roulette-board-wrapper::before,
+  .mobile-board-card .roulette-board-wrapper::after {
+    width: 25px !important;
+  }
+  
+  .mobile-board-card .roulette-board {
+    transform: scale(0.78) !important;
+  }
 }
